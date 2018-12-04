@@ -1,0 +1,19 @@
+{
+  "name": "cs554_final_project",
+  "version": "1.0.0",
+  "description": "App that lets users track and share their exercise history in the gym.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cbouwense/CS554_Final_Project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cbouwense/CS554_Final_Project/issues"
+  },
+  "homepage": "https://github.com/cbouwense/CS554_Final_Project#readme"
+}
