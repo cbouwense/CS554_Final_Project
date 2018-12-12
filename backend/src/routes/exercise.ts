@@ -1,9 +1,8 @@
 import * as express from 'express';
-/*import {ExerciseModel} from '../models/exercise';*/
+import { Exercise } from '../models/exercise';
 import { IExercise } from '../models/exercise';
-const ExerciseModel = require('../models/exercise');
 
-export class Exercise {
+export class ExerciseRoute {
     public routes(router: express.Router): void {
         router.get('/exercise', this.getAll);
         router.get('/exercise/:id', this.getById);
@@ -12,7 +11,7 @@ export class Exercise {
 
     private async getAll(req: express.Request, res: express.Response): Promise<void> {
         try {
-            let result: object = await ExerciseModel.find({}).exec();
+            let result: object = await Exercise.find({}).exec();
             res.send({exercises: result});
         } catch (err) {
             console.error(err);
@@ -24,7 +23,7 @@ export class Exercise {
         let id: String = req.params.id;
 
         try {
-            let result: object = await ExerciseModel.findById(id);
+            let result: object = await Exercise.findById(id);
             res.send(result);
         } catch (err) {
             console.error(err);
@@ -35,7 +34,7 @@ export class Exercise {
     private async createExercise(req: express.Request, res: express.Response): Promise<void> {
         let exercise: IExercise = null;
         try {
-            exercise = new ExerciseModel({
+            exercise = new Exercise({
                 name: req.body.exercise.name,
                 description: req.body.exercise.description? req.body.exercise.description: null,
                 images: req.body.exercise.images? req.body.exercise.images: null,

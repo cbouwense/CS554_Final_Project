@@ -1,7 +1,7 @@
 import * as express from 'express';
-import { Exercise } from './exercise';
+import { ExerciseRoute } from './exercise';
 
-const exerciseRoutes: Exercise = new Exercise();
+const exerciseRoutes: ExerciseRoute = new ExerciseRoute();
 
 export function constructRoutes(router: express.Router) {
     exerciseRoutes.routes(router);
