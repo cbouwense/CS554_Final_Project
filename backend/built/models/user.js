@@ -1,4 +1,5 @@
 "use strict";
+var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = require("mongoose");
 var bcrypt_1 = require("bcrypt");
@@ -18,8 +19,7 @@ var user_schema = new mongoose_1.Schema({
     images: [String]
 });
 user_schema.pre('save', function (next) {
-    var _this = this;
-    if (this.isModified('password') || this.isNew) {
+    if (_this.isModified('password') || _this.isNew) {
         bcrypt_1.genSalt(user_salt, function (err, salt) {
             if (err)
                 return next(err);
