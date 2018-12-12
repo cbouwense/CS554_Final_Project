@@ -14,5 +14,7 @@ const user_schema = new Schema({
     bio: String,
     images: [String]
 });
+
 var User = model('User', user_schema);
 module.exports = User;
+
