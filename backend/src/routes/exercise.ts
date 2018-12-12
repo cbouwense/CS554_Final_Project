@@ -6,7 +6,7 @@ export class ExerciseRoute {
     public routes(router: Router): void {
         router.get('/exercise', this.getAll);
         router.get('/exercise/:id', this.getById);
-        router.post('/exercise', this.createExercise);
+        router.post('/exercise', this.create);
     }
 
     private async getAll(req: Request, res: Response): Promise<void> {
@@ -31,7 +31,7 @@ export class ExerciseRoute {
         }
     }
 
-    private async createExercise(req: Request, res: Response): Promise<void> {
+    private async create(req: Request, res: Response): Promise<void> {
         let exercise: IExercise = null;
         try {
             exercise = new Exercise({
