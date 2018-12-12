@@ -1,15 +1,15 @@
-import * as express from 'express';
+import { Router, Request, Response } from 'express';
 import { Exercise } from '../models/exercise';
 import { IExercise } from '../models/exercise';
 
 export class ExerciseRoute {
-    public routes(router: express.Router): void {
+    public routes(router: Router): void {
         router.get('/exercise', this.getAll);
         router.get('/exercise/:id', this.getById);
         router.post('/exercise', this.createExercise);
     }
 
-    private async getAll(req: express.Request, res: express.Response): Promise<void> {
+    private async getAll(req: Request, res: Response): Promise<void> {
         try {
             let result: object = await Exercise.find({}).exec();
             res.send({exercises: result});
@@ -19,7 +19,7 @@ export class ExerciseRoute {
         }
     }
 
-    private async getById(req: express.Request, res: express.Response): Promise<void> {
+    private async getById(req: Request, res: Response): Promise<void> {
         let id: String = req.params.id;
 
         try {
@@ -31,7 +31,7 @@ export class ExerciseRoute {
         }
     }
 
-    private async createExercise(req: express.Request, res: express.Response): Promise<void> {
+    private async createExercise(req: Request, res: Response): Promise<void> {
         let exercise: IExercise = null;
         try {
             exercise = new Exercise({
