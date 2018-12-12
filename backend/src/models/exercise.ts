@@ -19,6 +19,5 @@ const exercise_schema: Schema = new Schema({
 	equipment: [String]
 });
 
-const ExerciseModel: Model<IExercise> = model<IExercise>('Exercise', exercise_schema);
-
-module.exports = ExerciseModel;
+const Exercise: Model<IExercise> = model<IExercise>('Exercise', exercise_schema);
+export {Exercise};
