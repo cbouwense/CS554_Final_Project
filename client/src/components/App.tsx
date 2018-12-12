@@ -1,4 +1,7 @@
 import * as React from "react";
+import { Route, Switch } from "react-router";
+import Account from "./pages/Account";
+import Home from "./pages/Home";
 
 class App extends React.Component {
   public render() {
@@ -7,9 +10,11 @@ class App extends React.Component {
         <header className="App__header">
           <h1 className="App__header__title">Moth Balls</h1>
         </header>
-        <p className="App__intro">
-          Moth ball's trainging thing. It'll get you ripped, bro.
-        </p>
+
+        <Switch>
+          <Route path="/" exact={true} component={Home} />
+          <Route path="/account" component={Account} />
+        </Switch>
       </div>
     );
   }
