@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
-import {User} from './models/user';
+var User = require('./models/user');
+import { constructRoutes } from './routes';
 
 const app = express();
 const router = express.Router();
@@ -37,6 +38,9 @@ router.get('/', (req, res) => {
 
 	res.json({ message: 'bepis' });
 });
+
+constructRoutes(router);
+
 
 app.use('/api', router);
 
