@@ -20,10 +20,8 @@ export class ExerciseRoute {
     }
 
     private async getById(req: Request, res: Response): Promise<void> {
-        let id: String = req.params.id;
-
         try {
-            let result: object = await Exercise.findById(id);
+            let result: object = await Exercise.findById(req.params.id);
             res.send(result);
         } catch (err) {
             console.error(err);
@@ -33,6 +31,7 @@ export class ExerciseRoute {
 
     private async create(req: Request, res: Response): Promise<void> {
         let exercise: IExercise = null;
+
         try {
             exercise = new Exercise({
                 name: req.body.exercise.name,
