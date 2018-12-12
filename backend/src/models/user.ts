@@ -1,7 +1,5 @@
 import {Document, model, Model, Schema} from 'mongoose';
 
-let user_salt: Number = 10; // User salt
-
 export interface IUser extends Document {
     username: string;
     password: string;
@@ -25,5 +23,5 @@ const user_schema: Schema = new Schema({
     images: [String]
 });
 
-var User: Model<IUser> = model<IUser>('User', user_schema);
-module.exports = User;
+const User: Model<IUser> = model<IUser>('User', user_schema);
+export {User};

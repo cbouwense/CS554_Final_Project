@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
-var User = require('./models/user');
+import {User} from './models/user';
 
 const app = express();
 const router = express.Router();
