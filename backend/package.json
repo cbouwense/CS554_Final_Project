@@ -4,6 +4,8 @@
   "description": "App that lets users track and share their exercise history in the gym.",
   "main": "index.js",
   "scripts": {
+    "tsc": "tsc",
+    "start": "nodemon built/server.js",
     "test": "jest"
   },
   "repository": {
@@ -25,5 +27,8 @@
     "mongoose": "^5.3.16",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.8"
+  },
+  "devDependencies": {
+    "typescript": "^3.2.2"
   }
 }
