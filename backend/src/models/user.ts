@@ -1,5 +1,5 @@
 import {Document, model, Model, Schema} from 'mongoose';
-import {ExerciseEvent, IExerciseEvent} from './exercise-events';
+import {ExerciseEvent, IExerciseEvent} from './exercise-event';
 
 export interface IUser extends Document {
     username: string;
