@@ -2,6 +2,7 @@
     "compilerOptions": {
     	"module": "commonjs",
         "outDir": "./built",
+        "module": "commonjs",//CommonJs style module in output
         "allowJs": true,
         "target": "es6"
     },

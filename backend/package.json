@@ -1,34 +1,38 @@
 {
-  "name": "cs554_final_project",
-  "version": "1.0.0",
-  "description": "App that lets users track and share their exercise history in the gym.",
-  "main": "index.js",
-  "scripts": {
-    "tsc": "tsc",
-    "start": "nodemon built/server.js",
-    "test": "jest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cbouwense/CS554_Final_Project.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/cbouwense/CS554_Final_Project/issues"
-  },
-  "homepage": "https://github.com/cbouwense/CS554_Final_Project#readme",
-  "dependencies": {
-    "@types/mongodb": "^3.1.17",
-    "@types/mongoose": "^5.3.4",
-    "bcrypt": "^3.0.2",
-    "body-parser": "^1.18.3",
-    "express": "^4.16.4",
-    "mongoose": "^5.3.16",
-    "morgan": "^1.9.1",
-    "nodemon": "^1.18.8"
-  },
-  "devDependencies": {
-    "typescript": "^3.2.2"
-  }
+    "name": "cs554_final_project",
+    "version": "1.0.0",
+    "description": "App that lets users track and share their exercise history in the gym.",
+    "main": "index.js",
+    "scripts": {
+        "build": "tsc",
+        "dev": "ts-node ./src/server.ts",
+        "test": "jest",
+        "start": "node ./built/server.js",
+        "watch": "nodemon --exec ts-node -- ./src/app.ts"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/cbouwense/CS554_Final_Project.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/cbouwense/CS554_Final_Project/issues"
+    },
+    "homepage": "https://github.com/cbouwense/CS554_Final_Project#readme",
+    "dependencies": {
+        "@types/es6-promise": "^3.3.0",
+        "@types/express": "^4.16.0",
+        "@types/mongodb": "^3.1.17",
+        "@types/mongoose": "^5.3.4",
+        "bcrypt": "^3.0.2",
+        "body-parser": "^1.18.3",
+        "express": "^4.16.4",
+        "mongoose": "^5.3.16",
+        "morgan": "^1.9.1",
+        "nodemon": "^1.18.8"
+    },
+    "devDependencies": {
+        "typescript": "^3.2.2"
+    }
 }
