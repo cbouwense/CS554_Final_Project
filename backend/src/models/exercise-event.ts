@@ -1,7 +1,7 @@
 import {Document, model, Schema, Model} from 'mongoose';
 
 export interface IExerciseEvent extends Document {
-	exericseId: string;
+	exerciseId: string;
 	timestamp: Date;
 	userId: string;
 	weight: number;
