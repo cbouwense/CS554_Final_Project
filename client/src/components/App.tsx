@@ -1,7 +1,7 @@
-import * as React from "react";
-import { Route, Switch } from "react-router";
-import Account from "./pages/Account";
-import Home from "./pages/Home";
+import * as React from 'react';
+import { Link, Route, Switch } from 'react-router-dom';
+import Account from './pages/Account';
+import Home from './pages/Home';
 
 class App extends React.Component {
   public render() {
@@ -9,6 +9,7 @@ class App extends React.Component {
       <div className="App">
         <header className="App__header">
           <h1 className="App__header__title">Moth Balls</h1>
+          <Link to="/account/login">Login</Link>
         </header>
 
         <Switch>

@@ -1,16 +1,18 @@
-import * as React from "react";
-import { Route, Switch } from "react-router-dom";
+import * as React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import Login from './Login';
 
 const Account = () => {
-  const user = { fullName: "Chad Bro" };
+  const user = undefined;
 
   return (
     <main>
       <header>
-        <h1>{user.fullName}</h1>
+        <h2>{user ? { user } : 'Login'}</h2>
       </header>
 
       <Switch>
+        <Route path="/account/login" component={Login} />
         <Route path="/history" />
       </Switch>
     </main>
