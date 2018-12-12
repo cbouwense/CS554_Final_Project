@@ -1,7 +1,6 @@
 import {Document, model, Model, Schema} from 'mongoose';
-import {genSalt, hash} from 'bcrypt';
 
-let user_salt = 10; // User salt
+let user_salt: Number = 10; // User salt
 
 export interface IUser extends Document {
     username: string;
@@ -26,20 +25,5 @@ const user_schema: Schema = new Schema({
     images: [String]
 });
 
-user_schema.pre<IUser>('save', (next) => {
-    if (this.isModified('password') || this.isNew) {
-        genSalt(user_salt, (err, salt) => {
-            if (err) return next(err);
-            hash(this.password, salt, null, (err, hash) => {
-                if (err) return next(err);
-                this.password = hash;
-                next();
-            });
-        });
-    }
-    else return next();
-});
-
-var UserModel: Model<IUser> = model<IUser>('User', user_schema);
-
-export default UserModel;
+var User: Model<IUser> = model<IUser>('User', user_schema);
+module.exports = User;
