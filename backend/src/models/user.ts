@@ -23,6 +23,5 @@ const user_schema: Schema = new Schema({
     images: [String]
 });
 
-var UserModel: Model<IUser> = model<IUser>('User', user_schema);
-
-export default UserModel;
+const User: Model<IUser> = model<IUser>('User', user_schema);
+export {User};
