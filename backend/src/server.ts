@@ -16,10 +16,6 @@ app.use(morgan('dev'));
 
 app.use('/api', constructRoutes());
 
-app.post('/upload', upload.single('image'), (req, res) => {
-    res.status(200).json({ x: (req.file as Express.MulterS3.File).location });
-});
-
 app.use('*', (err, req, res, next) => {
     if (err) {
         console.error(err);
