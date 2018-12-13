@@ -84,14 +84,12 @@ async function update(req: Request, res: Response) {
     }
 
     let exercise = null;
-    console.log(req.body.exerciseEvent);
 
     if (req.body.exerciseEvent.exerciseId) {
         if (!Types.ObjectId.isValid(req.body.exerciseEvent.exerciseId)) {
             res.status(404).send({ message: `Exercise with id: ${req.body.exerciseEvent.exerciseId} not found` });
             return;
         }
-        console.log("HERE");
 
         try {
             exercise = await Exercise.findById(req.body.exerciseEvent.exerciseId);
@@ -131,7 +129,6 @@ async function update(req: Request, res: Response) {
             sets: req.body.exerciseEvent.sets ? req.body.exerciseEvent.sets : result.sets,
             reps: req.body.exerciseEvent.reps ? req.body.exerciseEvent.reps : result.reps,
         };
-        console.log(toUpdate);
         result = await ExerciseEvent.findOneAndUpdate({_id: req.params.id}, toUpdate, {new: true}).exec();
 
         res.send(result);
