@@ -2,11 +2,9 @@ import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import * as mongoose from 'mongoose';
 import morgan = require('morgan');
-import { User } from './models/user';
 import { constructRoutes } from './routes';
 
 const app = express();
-const router = express.Router();
 
 mongoose.connect('mongodb://localhost/mothballs', { useNewUrlParser: true })
     .then(() => console.log('[mongoose]: connection successful'))
@@ -15,31 +13,18 @@ mongoose.connect('mongodb://localhost/mothballs', { useNewUrlParser: true })
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 
-// TODO: move routes to separate file probably
-router.get('/', (req, res) => {
+app.use('/api', constructRoutes());
 
-    // testing out user creation
-
-    const matt = new User({
-        username: 'mrota',
-        password: '123',
-    });
-
-    matt.save((error) => {
-        if (error) console.log(`failed creating user: ${error}`);
-        else console.log('successfully created the user');
-    });
-
-    User.find({}, (err, docs) => {
-        console.log(docs);
-    });
-
-    res.json({ message: 'bepis' });
+app.use('*', (err, req, res, next) => {
+    if (err) {
+        console.error(err);
+        res.status(500).json({
+            message: err.message,
+        });
+    } else {
+        res.sendStatus(404);
+    }
 });
-
-constructRoutes(router);
-
-app.use('/api', router);
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
