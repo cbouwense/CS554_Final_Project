@@ -8,7 +8,8 @@ export interface IExercise extends Document {
     equipment: string[];
 }
 
-const exerciseSchema = new Schema({
+// tslint:disable-next-line: variable-name
+export const ExerciseSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -20,5 +21,4 @@ const exerciseSchema = new Schema({
 });
 
 // tslint:disable-next-line:variable-name
-const Exercise = model<IExercise>('Exercise', exerciseSchema);
-export { Exercise };
+export const Exercise = model<IExercise>('Exercise', ExerciseSchema);
