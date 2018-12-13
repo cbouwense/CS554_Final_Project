@@ -8,10 +8,11 @@ const Account = () => {
   return (
     <main>
       <header>
-        <h1>{user.fullName}</h1>
+        <h2>{user ? { user } : 'Login'}</h2>
       </header>
 
       <Switch>
+        <Route path="/account/login" component={Login} />
         <Route path="/history" />
         <Route path="/account/register" component={Register}/>
       </Switch>
