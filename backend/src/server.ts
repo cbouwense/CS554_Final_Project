@@ -3,7 +3,6 @@ import * as express from 'express';
 import * as mongoose from 'mongoose';
 import morgan = require('morgan');
 import { constructRoutes } from './routes';
-import { upload } from './s3';
 
 const app = express();
 
