@@ -39,7 +39,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
     const { username, password } = this.state;
 
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <label>
           Username:
           <input
@@ -58,6 +58,10 @@ class Login extends React.Component<ILoginProps, ILoginState> {
             value={password}
             onChange={this.handleChange}
           />
+        </label>
+
+        <label>
+          <button type="submit" value="submit">Submit</button>
         </label>
       </form>
     );
