@@ -9,7 +9,8 @@ export interface IExerciseEvent extends Document {
     reps: number;
 }
 
-const exerciseEventSchema: Schema = new Schema({
+// tslint:disable-next-line:variable-name
+export const ExerciseEventSchema = new Schema({
     exerciseId: {
         type: String,
         required: true,
@@ -22,5 +23,4 @@ const exerciseEventSchema: Schema = new Schema({
 });
 
 // tslint:disable-next-line:variable-name
-const ExerciseEvent = model<IExerciseEvent>('ExerciseEvent', exerciseEventSchema);
-export { ExerciseEvent };
+export const ExerciseEvent = model<IExerciseEvent>('ExerciseEvent', ExerciseEventSchema);
