@@ -1,15 +1,6 @@
 import React from 'react';
-import axois from 'axios';
 
-interface ILoginState {
-  username: string;
-  password: string;
-  error: string | null;
-}
-
-type LoginStateSetter = Pick<ILoginState, 'username' | 'password'>;
-
-export class Login extends React.Component<{}, ILoginState> {
+export class Login extends React.Component {
   constructor(props) {
     super(props);
 
@@ -20,15 +11,15 @@ export class Login extends React.Component<{}, ILoginState> {
     };
   }
 
-  public handleChange = (event: React.FormEvent<HTMLInputElement>) => {
+  handleChange = (event) => {
     event.preventDefault();
 
     const { name, value } = event.currentTarget;
 
-    this.setState({ [name]: value } as LoginStateSetter);
+    this.setState({ [name]: value });
   };
 
-  public handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  handleSubmit = (event) => {
     event.preventDefault();
 
     try {
@@ -47,7 +38,7 @@ export class Login extends React.Component<{}, ILoginState> {
     }
   };
 
-  public render() {
+  render() {
     const { username, password } = this.state;
 
     return (
