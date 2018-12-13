@@ -1,7 +1,8 @@
 import {Document, model, Schema, Model} from 'mongoose';
+import { IExercise, ExerciseSchema }  from './exercise';
 
 export interface IExerciseEvent extends Document {
-	exerciseId: string;
+	exercise: IExercise;
 	timestamp: Date;
 	userId: string;
 	weight: number;
@@ -9,9 +10,9 @@ export interface IExerciseEvent extends Document {
 	reps: number;
 }
 
-const exerciseEventSchema: Schema = new Schema({
-	exerciseId: { 
-		type: String, 
+const ExerciseEventSchema: Schema = new Schema({
+	exercise: { 
+		type: ExerciseSchema, 
 		required: true 
 	},
 	timestamp: Date,
@@ -21,5 +22,5 @@ const exerciseEventSchema: Schema = new Schema({
 	reps: Number
 });
 
-const ExerciseEvent: Model<IExerciseEvent> = model<IExerciseEvent>('ExerciseEvent', exerciseEventSchema);
-export {ExerciseEvent};
+const ExerciseEvent: Model<IExerciseEvent> = model<IExerciseEvent>('ExerciseEvent', ExerciseEventSchema);
+export {ExerciseEvent, ExerciseEventSchema};
