@@ -18,11 +18,10 @@ export const upload = multer({
         s3,
         bucket: 'mothballs-images',
         metadata: (req, file, cb) => {
-            cb(null, {fieldname: file.fieldname});
+            cb(null, { fieldname: file.fieldname });
         },
         key: (req, file, cb) => {
             cb(null, `${Date.now().toString()}.${file.filename.split('.').reverse()[0]}`);
         },
     }),
 });
-
