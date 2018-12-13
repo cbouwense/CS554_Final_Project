@@ -1,5 +1,5 @@
-import {Document, model, Model, Schema} from 'mongoose';
-import {ExerciseEventSchema, IExerciseEvent} from './exercise-event';
+import { Document, model, Schema } from 'mongoose';
+import { ExerciseEventSchema, IExerciseEvent } from './exercise-event';
 
 export interface IUser extends Document {
     username: string;
@@ -7,24 +7,25 @@ export interface IUser extends Document {
     profile_image: string;
     bio: string;
     images: string[];
-    exerciseEvents: IExerciseEvent[]
+    exerciseEvents: IExerciseEvent[];
 }
 
-const UserSchema: Schema = new Schema({
+// tslint:disable-next-line: variable-name
+export const UserSchema = new Schema({
     username: {
         type: String,
         unique: true,
-        required: true
+        required: true,
     },
     password: {
         type: String,
-        required: true
+        required: true,
     },
     profile_image: String,  // URL to image store
     bio: String,
     images: [String],
-    exerciseEvents: [ExerciseEventSchema]
+    exerciseEvents: [ExerciseEventSchema],
 });
 
-const User: Model<IUser> = model<IUser>('User', UserSchema);
-export {User, UserSchema};
+// tslint:disable-next-line: variable-name
+export const User = model<IUser>('User', UserSchema);

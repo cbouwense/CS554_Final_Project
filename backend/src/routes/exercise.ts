@@ -1,11 +1,11 @@
-import { Router, Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 import { Types } from 'mongoose';
 import { Exercise, IExercise } from '../models/exercise';
 
 async function getAll(req: Request, res: Response) {
     try {
-        let result: object = await Exercise.find({}).exec();
-        res.send({exercises: result});
+        const result: object = await Exercise.find({}).exec();
+        res.send({ exercises: result });
     } catch (err) {
         console.error(err);
         res.sendStatus(500);
@@ -14,22 +14,22 @@ async function getAll(req: Request, res: Response) {
 
 async function getById(req: Request, res: Response) {
     if (!Types.ObjectId.isValid(req.params.id)) {
-        res.status(404).send({message: `Exercise with id: ${req.params.id} not found`});
+        res.status(404).send({ message: `Exercise with id: ${req.params.id} not found` });
         return;
     }
 
     try {
-        let result: object = await Exercise.findById(req.params.id).exec();
+        const result: object = await Exercise.findById(req.params.id).exec();
 
         if (result) {
             res.send(result);
         } else {
-            res.status(404).send({ message: `Exercise with id: ${req.params.id} not found`});
+            res.status(404).send({ message: `Exercise with id: ${req.params.id} not found` });
         }
 
     } catch (err) {
         console.error(err);
-        res.status(404).send({ message: `Exercise with id: ${req.params.id} not found`});
+        res.status(404).send({ message: `Exercise with id: ${req.params.id} not found` });
     }
 }
 
@@ -39,18 +39,18 @@ async function create(req: Request, res: Response) {
     try {
         exercise = new Exercise({
             name: req.body.exercise.name,
-            description: req.body.exercise.description? req.body.exercise.description: null,
-            images: req.body.exercise.images? req.body.exercise.images: null,
-            bodyparts_worked: req.body.exercise.bodyparts_worked? req.body.exercise.bodyparts_worked: null,
-            equipment: req.body.exercise.equipment? req.body.exercise.equipment: null
+            description: req.body.exercise.description ? req.body.exercise.description : null,
+            images: req.body.exercise.images ? req.body.exercise.images : null,
+            bodyparts_worked: req.body.exercise.bodyparts_worked || null,
+            equipment: req.body.exercise.equipment ? req.body.exercise.equipment : null,
         });
     } catch (err) {
-        res.status(400).send({ message: "Invalid exercise" });
+        res.status(400).send({ message: 'Invalid exercise' });
         return;
     }
 
     try {
-        let result: IExercise = await exercise.save();
+        const result: IExercise = await exercise.save();
 
         res.send(result);
     } catch (err) {
