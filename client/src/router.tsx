@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 import { Route, HashRouter, Switch } from 'react-router-dom';
 import App from './App';
 import { Home, Login, Register } from './components';
 
-export const AppRouter: React.StatelessComponent<{}> = () => {
+export const AppRouter = () => {
     return (
         <HashRouter>
             <div>
