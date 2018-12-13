@@ -8,7 +8,8 @@
         "dev": "ts-node ./src/server.ts",
         "test": "jest",
         "start": "node ./built/server.js",
-        "watch": "nodemon --exec ts-node -- ./src/server.ts"
+        "watch": "nodemon --exec ts-node -- ./src/server.ts",
+        "lint": "tslint -p . -c tslint.json"
     },
     "repository": {
         "type": "git",
@@ -34,6 +35,9 @@
         "@types/mongodb": "^3.1.17",
         "@types/mongoose": "^5.3.4",
         "ts-node": "^7.0.1",
+        "tslint": "^5.11.0",
+        "tslint-config-airbnb": "^5.11.1",
+        "tslint-eslint-rules": "^5.4.0",
         "typescript": "^3.2.2"
     }
 }
