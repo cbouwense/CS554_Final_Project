@@ -1,23 +1,24 @@
-import {Document, model, Schema, Model} from 'mongoose';
+import { Document, model, Model, Schema } from 'mongoose';
 
 export interface IExercise extends Document {
-	name: string;
-	description: string;
-	images: string[];
-	bodyparts_worked: string[];
-	equipment: string[];
+    name: string;
+    description: string;
+    images: string[];
+    bodyparts_worked: string[];
+    equipment: string[];
 }
 
-const exercise_schema: Schema = new Schema({
-	name: { 
-		type: String, 
-		required: true 
-	},
-	description: String,
-	images: [String],
-	bodyparts_worked: [String],
-	equipment: [String]
+const exerciseSchema = new Schema({
+    name: {
+        type: String,
+        required: true,
+    },
+    description: String,
+    images: [String],
+    bodyparts_worked: [String],
+    equipment: [String],
 });
 
-const Exercise: Model<IExercise> = model<IExercise>('Exercise', exercise_schema);
-export {Exercise};
+// tslint:disable-next-line:variable-name
+const Exercise = model<IExercise>('Exercise', exerciseSchema);
+export { Exercise };
