@@ -1,16 +1,10 @@
-import * as express from 'express';
-import userRoute from './user';
-import exerciseRoute from './exercise';
-import exerciseEventRoute from './exercise-event';
+import { Router } from 'express';
+import exercise from './exercise';
+import exerciseEvent from './exercise-event';
 
-
-export function constructRoutes(router: express.Router) {
-    exerciseRoute(router);
-    exerciseEventRoute(router);
-    userRoute(router);
-
-    router.use('*', (_req, res) => {
-        res.status(404).json({ message: "Not Found" });
-    });
+export function constructRoutes() {
+    const router = Router();
+    exercise(router);
+    exerciseEvent(router);
+    return router;
 }
-
