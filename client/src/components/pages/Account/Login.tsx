@@ -11,7 +11,7 @@ interface ILoginState {
 
 type LoginStateSetter = Pick<ILoginState, 'username' | 'password'>;
 
-class Login extends React.Component<ILoginProps, ILoginState> {
+export class Login extends React.Component<ILoginProps, ILoginState> {
   constructor(props: ILoginProps) {
     super(props);
 
@@ -67,5 +67,3 @@ class Login extends React.Component<ILoginProps, ILoginState> {
     );
   }
 }
-
-export default Login;

@@ -75,4 +75,3 @@ export class Register extends React.Component<IRegisterProps, IRegisterState> {
     }
 }
 
-export default Register;

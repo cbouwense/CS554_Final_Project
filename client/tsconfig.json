@@ -14,11 +14,7 @@
     "jsx": "preserve",
     "isolatedModules": true
   },
-<<<<<<< HEAD
   "include": [
     "src"
   ]
-=======
-  "include": ["src"]
->>>>>>> b3e8dd6f752933b07dfc40da2060dd31560a6fc6
 }
