@@ -1,7 +1,7 @@
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import * as mongoose from 'mongoose';
-import morgan = require('morgan');
+import * as morgan from 'morgan';
 import { constructRoutes } from './routes';
 
 const app = express();

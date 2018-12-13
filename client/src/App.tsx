@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
 import { Navbar } from './components';
+import 'bulma/css/bulma.css';
 
 class App extends React.Component {
   public render() {
