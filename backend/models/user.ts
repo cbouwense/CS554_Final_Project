@@ -1,5 +1,5 @@
 import {Document, model, Model, Schema} from 'mongoose';
-import {ExerciseEvent, IExerciseEvent} from './exercise-event';
+import {ExerciseEventSchema, IExerciseEvent} from './exercise-event';
 
 export interface IUser extends Document {
     username: string;
@@ -10,7 +10,7 @@ export interface IUser extends Document {
     exerciseEvents: IExerciseEvent[]
 }
 
-const user_schema: Schema = new Schema({
+const UserSchema: Schema = new Schema({
     username: {
         type: String,
         unique: true,
@@ -23,8 +23,8 @@ const user_schema: Schema = new Schema({
     profile_image: String,  // URL to image store
     bio: String,
     images: [String],
-    exerciseEvents: [ExerciseEvent]
+    exerciseEvents: [ExerciseEventSchema]
 });
 
-const User: Model<IUser> = model<IUser>('User', user_schema);
-export {User};
+const User: Model<IUser> = model<IUser>('User', UserSchema);
+export {User, UserSchema};

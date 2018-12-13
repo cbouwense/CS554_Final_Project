@@ -8,7 +8,7 @@ export interface IExercise extends Document {
 	equipment: string[];
 }
 
-const exercise_schema: Schema = new Schema({
+const ExerciseSchema: Schema = new Schema({
 	name: { 
 		type: String, 
 		required: true 
@@ -19,5 +19,5 @@ const exercise_schema: Schema = new Schema({
 	equipment: [String]
 });
 
-const Exercise: Model<IExercise> = model<IExercise>('Exercise', exercise_schema);
-export {Exercise};
+const Exercise: Model<IExercise> = model<IExercise>('Exercise', ExerciseSchema);
+export {Exercise, ExerciseSchema};

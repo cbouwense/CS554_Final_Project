@@ -9,7 +9,7 @@ const app = express();
 const router = express.Router();
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/mothballs')
+mongoose.connect('mongodb://localhost/mothballs', { useNewUrlParser: true})
 	.then(() => console.log('[mongoose]: connection successful'))
 	.catch((err) => console.log(`[mongoose]: ${err}`))
 
