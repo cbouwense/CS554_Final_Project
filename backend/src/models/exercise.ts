@@ -1,4 +1,4 @@
-import { Document, model, Model, Schema } from 'mongoose';
+import { Document, model, Schema } from 'mongoose';
 
 export interface IExercise extends Document {
     name: string;
@@ -9,7 +9,7 @@ export interface IExercise extends Document {
 }
 
 // tslint:disable-next-line: variable-name
-export const ExerciseSchema = new Schema({
+export const ExerciseSchema: Schema = new Schema({
     name: {
         type: String,
         required: true,
@@ -20,5 +20,5 @@ export const ExerciseSchema = new Schema({
     equipment: [String],
 });
 
-// tslint:disable-next-line:variable-name
+// tslint:disable-next-line: variable-name
 export const Exercise = model<IExercise>('Exercise', ExerciseSchema);

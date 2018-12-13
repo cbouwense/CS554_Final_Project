@@ -1,7 +1,8 @@
-import { Document, model, Model, Schema } from 'mongoose';
+import { Document, model, Schema } from 'mongoose';
+import { ExerciseSchema, IExercise } from './exercise';
 
 export interface IExerciseEvent extends Document {
-    exerciseId: string;
+    exercise: IExercise;
     timestamp: Date;
     userId: string;
     weight: number;
@@ -9,10 +10,10 @@ export interface IExerciseEvent extends Document {
     reps: number;
 }
 
-// tslint:disable-next-line:variable-name
-export const ExerciseEventSchema = new Schema({
-    exerciseId: {
-        type: String,
+// tslint:disable-next-line: variable-name
+export const ExerciseEventSchema: Schema = new Schema({
+    exercise: {
+        type: ExerciseSchema,
         required: true,
     },
     timestamp: Date,
@@ -22,5 +23,5 @@ export const ExerciseEventSchema = new Schema({
     reps: Number,
 });
 
-// tslint:disable-next-line:variable-name
+// tslint:disable-next-line: variable-name
 export const ExerciseEvent = model<IExerciseEvent>('ExerciseEvent', ExerciseEventSchema);

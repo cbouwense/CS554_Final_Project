@@ -7,7 +7,7 @@
         "build": "tsc",
         "dev": "ts-node ./src/server.ts",
         "test": "jest",
-        "start": "node ./built/server.js",
+        "start": "node ./build/server.js",
         "watch": "nodemon --exec ts-node -- ./src/server.ts",
         "lint": "tslint -p . -c tslint.json"
     },

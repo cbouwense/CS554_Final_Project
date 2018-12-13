@@ -10,7 +10,7 @@ export interface IUser extends Document {
     exerciseEvents: IExerciseEvent[];
 }
 
-// tslint:disable-next-line:variable-name
+// tslint:disable-next-line: variable-name
 export const UserSchema = new Schema({
     username: {
         type: String,
@@ -27,5 +27,5 @@ export const UserSchema = new Schema({
     exerciseEvents: [ExerciseEventSchema],
 });
 
-// tslint:disable-next-line:variable-name
+// tslint:disable-next-line: variable-name
 export const User = model<IUser>('User', UserSchema);
