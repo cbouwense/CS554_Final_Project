@@ -1,23 +1,22 @@
-import * as React from 'react';
-
-interface ILoginProps {
-  [key: string]: any;
-}
+import React from 'react';
+import axois from 'axios';
 
 interface ILoginState {
   username: string;
   password: string;
+  error: string | null;
 }
 
 type LoginStateSetter = Pick<ILoginState, 'username' | 'password'>;
 
-export class Login extends React.Component<ILoginProps, ILoginState> {
-  constructor(props: ILoginProps) {
+export class Login extends React.Component<{}, ILoginState> {
+  constructor(props) {
     super(props);
 
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      error: null
     };
   }
 
@@ -29,10 +28,23 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
     this.setState({ [name]: value } as LoginStateSetter);
   };
 
-  public handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  public handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // TODO Login backend
+    try {
+      const res = await axois.post('/api/user/login', {
+        username: this.state.username,
+        password: this.state.password
+      });
+
+      console.log(`Logged in ${res.data._id}, ${res.data.username}`);
+    } catch (err) {
+      this.setState({
+        username: '',
+        password: '',
+        error: err.response.data.message
+      });
+    }
   };
 
   public render() {
