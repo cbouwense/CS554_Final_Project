@@ -1,51 +1,47 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const logger = require('morgan');
-const mongoose = require('mongoose');
-var User = require('./models/user');
+import * as bodyParser from 'body-parser';
+import * as express from 'express';
+import * as mongoose from 'mongoose';
+import morgan = require('morgan');
+import { User } from './models/user';
 import { constructRoutes } from './routes';
 
 const app = express();
 const router = express.Router();
 
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/mothballs', { useNewUrlParser: true})
-	.then(() => console.log('[mongoose]: connection successful'))
-	.catch((err) => console.log(`[mongoose]: ${err}`))
+mongoose.connect('mongodb://localhost/mothballs', { useNewUrlParser: true })
+    .then(() => console.log('[mongoose]: connection successful'))
+    .catch(err => console.log(`[mongoose]: ${err}`));
 
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(logger('dev'));
+app.use(morgan('dev'));
 
 // TODO: move routes to separate file probably
-router.get('/', (req, res) => { 
-	
-	// testing out user creation
-	
-	const matt = new User({
-		username: "mrota",
-		password: "123"
-	});
-	
-	matt.save((error) => {
-		if (error) console.log(`failed creating user: ${error}`)
-		else console.log("successfully created the user")
-	});
+router.get('/', (req, res) => {
 
-	User.find({}, function(err, docs) {
-		console.log(docs);
-	});
+    // testing out user creation
 
-	res.json({ message: 'bepis' });
+    const matt = new User({
+        username: 'mrota',
+        password: '123',
+    });
+
+    matt.save((error) => {
+        if (error) console.log(`failed creating user: ${error}`);
+        else console.log('successfully created the user');
+    });
+
+    User.find({}, (err, docs) => {
+        console.log(docs);
+    });
+
+    res.json({ message: 'bepis' });
 });
 
 constructRoutes(router);
 
-
 app.use('/api', router);
 
-
-
-app.listen(3000, () => {
-	console.log('Server now running on http://localhost:3000');
+const port = process.env.PORT || 4000;
+app.listen(port, () => {
+    console.log(`🚀 http://localhost:${port}`);
 });

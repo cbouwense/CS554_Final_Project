@@ -31,7 +31,7 @@ async function create(req: Request, res: Response) {
     try {
         exerciseEvent = new ExerciseEvent({
             exercise,
-            timestamp: new Date(req.body.exerciseEvent.timestamp) ? new Date(req.body.exerciseEvent.timestamp) : null,
+            timestamp: new Date(req.body.exerciseEvent.timestamp) || null,
             userId: req.body.exerciseEvent.userId ? req.body.exerciseEvent.userId : null,
             weight: req.body.exerciseEvent.weight ? req.body.exerciseEvent.weight : null,
             sets: req.body.exerciseEvent.sets ? req.body.exerciseEvent.sets : null,
@@ -88,10 +88,12 @@ async function update(req: Request, res: Response) {
 
     if (req.body.exerciseEvent.exerciseId) {
         if (!Types.ObjectId.isValid(req.body.exerciseEvent.exerciseId)) {
-            res.status(404).send({ message: `Exercise with id: ${req.body.exerciseEvent.exerciseId} not found` });
+            res.status(404).send({
+                message: `Exercise with id: ${req.body.exerciseEvent.exerciseId} not found`,
+            });
             return;
         }
-        console.log("HERE");
+        console.log('HERE');
 
         try {
             exercise = await Exercise.findById(req.body.exerciseEvent.exerciseId);
@@ -102,7 +104,9 @@ async function update(req: Request, res: Response) {
         }
 
         if (!exercise) {
-            res.status(404).send({ message: `Exercise with id: ${req.body.exerciseEvent.exerciseId} not found` });
+            res.status(404).send({
+                message: `Exercise with id: ${req.body.exerciseEvent.exerciseId} not found`,
+            });
             return;
         }
     }
@@ -120,19 +124,22 @@ async function update(req: Request, res: Response) {
     if (!result) {
         res.status(404).send({ message: `ExerciseEvent with id: ${req.params.id} not found` });
         return;
-    } 
+    }
 
     try {
-        let toUpdate = {
+        const toUpdate = {
             exercise: exercise ? exercise : result.exercise,
-            timestamp: req.body.exerciseEvent.timestamp ? new Date(req.body.exerciseEvent.timestamp) : new Date(result.timestamp),
+            timestamp: req.body.exerciseEvent.timestamp
+                ? new Date(req.body.exerciseEvent.timestamp) : new Date(result.timestamp),
             userId: req.body.exerciseEvent.userId ? req.body.exerciseEvent.userId : result.userId,
             weight: req.body.exerciseEvent.weight ? req.body.exerciseEvent.weight : result.weight,
             sets: req.body.exerciseEvent.sets ? req.body.exerciseEvent.sets : result.sets,
             reps: req.body.exerciseEvent.reps ? req.body.exerciseEvent.reps : result.reps,
         };
         console.log(toUpdate);
-        result = await ExerciseEvent.findOneAndUpdate({_id: req.params.id}, toUpdate, {new: true}).exec();
+        result = await ExerciseEvent
+            .findOneAndUpdate({ _id: req.params.id }, toUpdate, { new: true })
+            .exec();
 
         res.send(result);
     } catch (err) {
@@ -171,7 +178,6 @@ async function deleteExerciseEvent(req: Request, res: Response) {
         res.sendStatus(500);
     }
 }
-
 
 export default (router: Router) => {
     router.get('/exerciseEvent/:id', getById);
