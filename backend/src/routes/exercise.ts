@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
-import { Exercise } from '../models/exercise';
-import { IExercise } from '../models/exercise';
+import { Types } from 'mongoose';
+import { Exercise, IExercise } from '../models/exercise';
 
 export class ExerciseRoute {
     public routes(router: Router): void {
@@ -20,12 +20,23 @@ export class ExerciseRoute {
     }
 
     private async getById(req: Request, res: Response): Promise<void> {
+        if (!Types.ObjectId.isValid(req.params.id)) {
+            res.status(404).send({message: `Exercise with id: ${req.params.id} not found`});
+            return;
+        }
+
         try {
-            let result: object = await Exercise.findById(req.params.id);
-            res.send(result);
+            let result: object = await Exercise.findById(req.params.id).exec();
+
+            if (result) {
+                res.send(result);
+            } else {
+                res.status(404).send({ message: `Exercise with id: ${req.params.id} not found`});
+            }
+
         } catch (err) {
             console.error(err);
-            res.sendStatus(500);
+            res.status(404).send({ message: `Exercise with id: ${req.params.id} not found`});
         }
     }
 

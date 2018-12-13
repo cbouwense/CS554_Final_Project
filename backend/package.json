@@ -7,8 +7,8 @@
         "build": "tsc",
         "dev": "ts-node ./src/server.ts",
         "test": "jest",
-        "start": "node ./built/server.js",
-        "watch": "nodemon --exec ts-node -- ./src/app.ts"
+        "start": "node ./build/server.js",
+        "watch": "nodemon --exec ts-node -- ./src/server.ts"
     },
     "repository": {
         "type": "git",
