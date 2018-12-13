@@ -59,6 +59,37 @@ async function create(req: Request, res: Response) {
         return;
     }
 }
+
+async function deleteExercise(req: Request, res: Response) {
+    if (!Types.ObjectId.isValid(req.params.id)) {
+        res.status(404).send({ message: `Exercise with id: ${req.params.id} not found` });
+        return;
+    }
+
+    let result: object = null;
+
+    try {
+        result = await Exercise.findById(req.params.id).exec();
+    } catch (err) {
+        console.error(err);
+        res.sendStatus(500);
+        return;
+    }
+
+    if (!result) {
+        res.status(400).send({ message: `Exercise with ${req.params.id} not found` });
+        return;
+    }
+
+    try {
+        result = await Exercise.findOneAndDelete({ _id: req.params.id });
+
+        res.send(result);
+    } catch (err) {
+        console.error(err);
+        res.sendStatus(500);
+    }
+}
 export default (router: Router) => {
     router.get('/exercise', getAll);
     router.get('/exercise/:id', getById);
