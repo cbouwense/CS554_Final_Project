@@ -1,18 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 
-interface ILoginProps {
-  [key: string]: any;
-}
-
-interface ILoginState {
-  username: string;
-  password: string;
-}
-
-type LoginStateSetter = Pick<ILoginState, 'username' | 'password'>;
-
-export class Login extends React.Component<ILoginProps, ILoginState> {
-  constructor(props: ILoginProps) {
+export class Login extends React.Component {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -21,21 +10,21 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
     };
   }
 
-  public handleChange = (event: React.FormEvent<HTMLInputElement>) => {
+  handleChange = (event) => {
     event.preventDefault();
 
     const { name, value } = event.currentTarget;
 
-    this.setState({ [name]: value } as LoginStateSetter);
+    this.setState({ [name]: value });
   };
 
-  public handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  handleSubmit = (event) => {
     event.preventDefault();
 
     // TODO Login backend
   };
 
-  public render() {
+  render() {
     const { username, password } = this.state;
 
     return (

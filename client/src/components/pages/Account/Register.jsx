@@ -1,19 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 
-interface IRegisterProps {
-    [key: string]: any,
-}
-
-interface IRegisterState {
-    username: string;
-    password: string;
-    confirmedPassword: string;
-}
-
-type RegisterStateSetter = Pick<IRegisterState, 'username' | 'password' | 'confirmedPassword'>;
-
-export class Register extends React.Component<IRegisterProps, IRegisterState> {
-    constructor(props: IRegisterProps) {
+export class Register extends React.Component {
+    constructor(props) {
         super(props);
         
         this.state = {
@@ -23,19 +11,19 @@ export class Register extends React.Component<IRegisterProps, IRegisterState> {
         };
     }
 
-    public handleChange = (event: React.FormEvent<HTMLInputElement>) => {
+    handleChange = (event) => {
         event.preventDefault();
 
         const { name, value } = event.currentTarget;
 
-        this.setState({ [name]: value } as RegisterStateSetter);
+        this.setState({ [name]: value });
     }
 
-    public handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    handleSubmit = (event) => {
 
     }
 
-    public render() {
+    render() {
         const { username, password, confirmedPassword } = this.state;
 
         return (

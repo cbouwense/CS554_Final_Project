@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-export const Navbar: React.StatelessComponent<{}> = () => {
+export const Navbar = () => {
     return (
         <nav id="navbar">
             <a href="#">Home</a>
