@@ -3,6 +3,7 @@ import * as express from 'express';
 import * as mongoose from 'mongoose';
 import morgan = require('morgan');
 import { constructRoutes } from './routes';
+import { upload } from './s3';
 
 const app = express();
 
@@ -14,6 +15,10 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 app.use('/api', constructRoutes());
+
+app.post('/upload', upload.single('image'), (req, res) => {
+    res.status(200).json({ x: (req.file as Express.MulterS3.File).location });
+});
 
 app.use('*', (err, req, res, next) => {
     if (err) {
