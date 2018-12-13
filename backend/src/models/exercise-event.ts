@@ -16,8 +16,14 @@ export const ExerciseEventSchema: Schema = new Schema({
         type: ExerciseSchema,
         required: true,
     },
-    timestamp: Date,
-    userId: String,
+    userId: {
+        type: String,
+        required: true,
+    },
+    timestamp: {
+        type: Date,
+        required: true,
+    },
     weight: Number,
     sets: Number,
     reps: Number,
