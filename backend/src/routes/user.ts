@@ -54,14 +54,8 @@ async function loginUser(req: Request, res: Response) {
     let username = null;
     let result = null;
 
-    try {
-        username = req.body.username;
+    username = req.body.username;
 
-    } catch (err) {
-        console.error(err);
-        res.status(404).send({ message: `User with username: ${username} not found` });
-        return;
-    }
 
     result = await User.findOne({ username: username });
 
@@ -71,7 +65,7 @@ async function loginUser(req: Request, res: Response) {
     }
 
     try {
-        let password = req.body.password;
+        const password = req.body.password;
 
         if (password !== result.password) {
             res.status(404).send({ message: `Invalid password` });
