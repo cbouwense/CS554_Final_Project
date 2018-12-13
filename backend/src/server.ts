@@ -41,6 +41,7 @@ constructRoutes(router);
 
 app.use('/api', router);
 
-app.listen(3000, () => {
-    console.log('🚀 http://localhost:3000');
+const port = process.env.PORT || 4000;
+app.listen(port, () => {
+    console.log(`🚀 http://localhost:${port}`);
 });
