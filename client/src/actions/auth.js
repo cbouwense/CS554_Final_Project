@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { USER_LOGIN_SUCCESS, USER_LOGIN_FAILURE, USER_LOGOUT } from './actionTypes';
+import { USER_LOGIN_SUCCESS, USER_LOGOUT } from './actionTypes';
 
 export function loginUser(username, password) {
   return async dispatch => {
@@ -10,20 +10,10 @@ export function loginUser(username, password) {
         data: res.data,
       });
     } catch (err) {
-      console.error(err);
-      if (err.response) {
-        return dispatch({
-          type: USER_LOGIN_FAILURE,
-          data: err.response.data
-        });
-      } else {
-        return dispatch({
-          type: USER_LOGIN_FAILURE,
-          data: {
-            message: err.message
-          }
-        })
-      }
+      if (err.response)
+        throw new Error(err.response.data.message)
+      else
+        throw err
     }
   };
 }
@@ -32,4 +22,21 @@ export function logoutUser() {
   return dispatch => dispatch({
     type: USER_LOGOUT,
   });
+}
+
+export function registerUser(username, password) {
+  return async dispatch => {
+    try {
+      const res = await axios.post('http://localhost:4000/api/user', { username, password })
+      return dispatch({
+        type: USER_LOGIN_SUCCESS,
+        data: res.data
+      });
+    } catch (err) {
+      if (err.response)
+        throw new Error(err.response.data.message)
+      else
+        throw err
+    }
+  }
 }
