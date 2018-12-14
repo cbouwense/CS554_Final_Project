@@ -3,6 +3,7 @@ import { Request, Response, Router } from 'express';
 import { Types } from 'mongoose';
 import { ExerciseEvent } from '../models/exercise-event';
 import { IUser, User } from '../models/user';
+import { upload } from '../s3';
 import { handleErrors } from '../util';
 
 const saltLength = 11;
@@ -115,6 +116,20 @@ async function updateUser(req: Request, res: Response) {
         res.status(404).send({ message: `User with id ${id} not found` });
     }
 
+    // Upload profile image to S3 and get its URL
+    let profileImageURL = null;
+    if (req.body.profile_image) {
+        profileImageURL = req.file;
+    }
+    console.log(`profileImageURL: ${profileImageURL}`);
+
+    // Upload the user images to S3 and get their URLs
+    if (req.body.images) {
+        req.body.images.forEach(async (elem) => {
+            console.log('bepis');
+        });
+    }
+
     const toUpdate = {
         username: req.body.username || user.username,
         password: req.body.password || user.password,
@@ -152,11 +167,18 @@ async function deleteUser(req: Request, res: Response) {
     res.send(await User.findByIdAndDelete(req.params.id));
 }
 
+// TODO max count for images might be more than 1 in the future
+
+const imageUploads = upload.single('profile_image');
+
+// const imageUploads = upload.fields([{ name: 'profile_image', maxCount: 1 },
+//                                    { name: 'images', maxCount: 1 }]);
+
 export default (router: Router) => {
-    router.get('/user', handleErrors(getAllUsers));
-    router.get('/user/:id', handleErrors(getById));
-    router.post('/user/login', handleErrors(loginUser));
-    router.post('/user', handleErrors(createUser));
-    router.patch('/user/:id', handleErrors(updateUser));
-    router.delete('/user/:id', handleErrors(deleteUser));
+    router.get('/user', imageUploads, handleErrors(getAllUsers));
+    router.get('/user/:id', imageUploads, handleErrors(getById));
+    router.post('/user/login', imageUploads, handleErrors(loginUser));
+    router.post('/user', imageUploads, handleErrors(createUser));
+    router.patch('/user/:id', imageUploads, handleErrors(updateUser));
+    router.delete('/user/:id', imageUploads, handleErrors(deleteUser));
 };
