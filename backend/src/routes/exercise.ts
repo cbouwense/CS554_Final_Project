@@ -4,7 +4,7 @@ import { Exercise, IExercise } from '../models/exercise';
 import { handleErrors } from '../util';
 
 async function getAll(req: Request, res: Response) {
-    res.send(await Exercise.find({}).exec());
+    res.send(await Exercise.find());
 }
 
 async function getById(req: Request, res: Response) {

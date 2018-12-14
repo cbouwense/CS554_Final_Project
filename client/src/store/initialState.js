@@ -3,5 +3,6 @@ export default {
     user: null,
     error: null
   },
-  exerciseEvents: []
+  exercises: [],
+  exerciseEvents: [],
 };

@@ -30,7 +30,6 @@ async function createUser(req: Request, res: Response) {
             profile_image: 'http://localhost:4000/defaultprofile.png',
             bio: null,
             images: [],
-            exerciseEvents: [],
         });
     } catch (err) {
         res.status(400).send({ message: 'Invalid user' });
@@ -62,17 +61,12 @@ async function getById(req: Request, res: Response) {
         return;
     }
 
-    result.exerciseEvents.map(async(elem) => {
-        return await ExerciseEvent.findById(elem);
-    });
-
     res.send({
         _id: result._id,
         username: result.username,
         profile_image: result.profile_image,
         bio: result.bio,
         images: result.images,
-        exerciseEvents: result.exerciseEvents,
     });
 }
 
@@ -91,10 +85,13 @@ async function loginUser(req: Request, res: Response) {
             return;
         }
 
+        const exerciseEvents = await ExerciseEvent.find({ userId: result._id });
+
         res.send({
             _id: result._id,
             username: result.username,
             profile_image: result.profile_image,
+            exerciseEvents,
         });
     } catch (err) {
         console.error(err);
@@ -117,14 +114,12 @@ async function updateUser(req: Request, res: Response) {
         res.status(404).send({ message: `User with id ${id} not found` });
     }
 
-    let err = false;
     const toUpdate = {
         username: req.body.username || user.username,
         password: req.body.password || user.password,
         profile_image: req.body.profile_image || user.profile_image,
         bio: req.body.bio || user.bio,
         images: user.images,
-        exerciseEvents: user.exerciseEvents,
     };
 
     if (req.body.images) {
@@ -135,33 +130,9 @@ async function updateUser(req: Request, res: Response) {
         });
     }
 
-    if (req.body.exerciseEvents) {
-        for (const x of req.body.exerciseEvents) {
-            const eventId = req.body.exerciseEvents[x];
-            if (!Types.ObjectId.isValid(eventId)) {
-                res.status(404).send({ message: `ExerciseEvent with id: ${eventId} not found` });
-                return;
-            }
-            const result = await ExerciseEvent.findById(eventId);
-
-            if (!result) {
-                err = true;
-                res.status(404).send({
-                    message: `ExerciseEvent with id ${eventId} not found`,
-                });
-                return;
-            }
-
-            if (toUpdate.exerciseEvents.indexOf(eventId) === -1) {
-                toUpdate.exerciseEvents.push(eventId);
-            }
-        }
-    }
-
     console.log(toUpdate);
 
     res.send(await User.findOneAndUpdate({ _id: id }, toUpdate, { new: true }));
-
 }
 
 async function deleteUser(req: Request, res: Response) {
