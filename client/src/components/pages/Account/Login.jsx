@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loginUser, USER_LOGIN_SUCCESS } from '../../../actions';
+import { loginUser } from '../../../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -9,6 +9,7 @@ class Login extends React.Component {
     this.state = {
       username: '',
       password: '',
+      error: null
     };
   }
 
@@ -23,17 +24,24 @@ class Login extends React.Component {
   handleSubmit = async (event) => {
     event.preventDefault();
 
-    const res = await this.props.loginUser(this.state.username, this.state.password);
-    if (res.type === USER_LOGIN_SUCCESS)
+    try {
+      await this.props.loginUser(this.state.username, this.state.password);
       this.props.history.push('/');
+    } catch (err) {
+      this.setState({
+        username: '',
+        password: '',
+        error: err.message
+      });
+    }
   };
 
   render() {
     const { username, password } = this.state;
 
     return <>
-      {this.props.error &&
-      <p className="notification is-danger">{this.props.error}</p>}
+      {this.state.error &&
+      <p className="notification is-danger">{this.state.error}</p>}
 
       <form onSubmit={this.handleSubmit}>
         <label>
@@ -65,6 +73,6 @@ class Login extends React.Component {
 }
 
 export default connect(
-  state => ({ error: state.auth.error }),
+  null,
   { loginUser }
 )(Login);
