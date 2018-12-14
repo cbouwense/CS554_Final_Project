@@ -50,7 +50,6 @@ class Navbar extends React.Component {
           <div className="navbar-end">
             {user._id
             ? <>
-                <NavLink className="navbar-item" to="/exerciseEvents/new">new exercise event</NavLink>
                 <a className="navbar-item" onClick={this.logout}>Logout {user.username}</a>
                 <p className="navbar-item"><img src={user.profile_image} alt="profile" /></p>
               </>
