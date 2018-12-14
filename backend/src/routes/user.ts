@@ -1,26 +1,52 @@
-import { Router, Request, Response } from 'express';
-import { ExerciseEvent, IExerciseEvent } from '../models/exercise-event';
+import { compare, hash } from 'bcryptjs';
+import { Request, Response, Router } from 'express';
 import { Types } from 'mongoose';
-import { User, IUser} from '../models/user';
+import { ExerciseEvent } from '../models/exercise-event';
+import { IUser, User } from '../models/user';
 import { handleErrors } from '../util';
 
+const saltLength = 11;
+
 async function createUser(req: Request, res: Response) {
+    const { username, password } = req.body;
+
+    if (username == null || username.length === 0 ||
+        password == null || password.length === 0) {
+        res.status(400).send({ message: 'missing username or password' });
+        return;
+    }
+
+    if (await User.findOne({ username }) != null) {
+        res.status(400).send({ message: `User ${username} already exists` });
+        return;
+    }
+
     let user: IUser = null;
 
     try {
         user = new User({
-            ...req.body
+            username,
+            password: await hash(password, saltLength),
+            profile_image: '/defaultprofile.png',
+            bio: null,
+            images: [],
+            exerciseEvents: [],
         });
     } catch (err) {
         res.status(400).send({ message: 'Invalid user' });
         return;
     }
 
-    res.send(await user.save());
+    const saved = await user.save();
+    res.send({
+        _id: saved._id,
+        username: saved.username,
+        profile_image: saved.profile_image,
+    });
 }
 
 async function getAllUsers(req: Request, res: Response): Promise<void> {
-    res.send(await User.find({}));
+    res.send(await User.find());
 }
 
 async function getById(req: Request, res: Response) {
@@ -51,13 +77,8 @@ async function getById(req: Request, res: Response) {
 }
 
 async function loginUser(req: Request, res: Response) {
-    let username = null;
-    let result = null;
-
-    username = req.body.username;
-
-
-    result = await User.findOne({ username: username });
+    const { username, password } = req.body;
+    const result = await User.findOne({ username });
 
     if (!result) {
         res.status(404).send({ message: `User with username: ${username} not found` });
@@ -65,10 +86,8 @@ async function loginUser(req: Request, res: Response) {
     }
 
     try {
-        const password = req.body.password;
-
-        if (password !== result.password) {
-            res.status(404).send({ message: `Invalid password` });
+        if (await compare(password, result.password)) {
+            res.status(404).send({ message: 'Invalid password' });
             return;
         }
 
@@ -78,34 +97,33 @@ async function loginUser(req: Request, res: Response) {
         });
     } catch (err) {
         console.error(err);
-        res.status(404).send({ message: `Invalid password` });
+        res.status(404).send({ message: err.message });
         return;
     }
 }
 
 async function updateUser(req: Request, res: Response) {
-    let id = req.params.id;
+    const id = req.params.id;
 
     if (!Types.ObjectId.isValid(id)) {
         res.status(404).send({ message: `User with id: ${id} not found` });
         return;
     }
 
-    let user = await User.findById(id);
+    const user = await User.findById(id);
 
     if (!user) {
         res.status(404).send({ message: `User with id ${id} not found` });
     }
 
     let err = false;
-    let toUpdate = { 
+    const toUpdate = {
         username: req.body.username || user.username,
         password: req.body.password || user.password,
         profile_image: req.body.profile_image || user.profile_image,
         bio: req.body.bio || user.bio,
         images: user.images,
         exerciseEvents: user.exerciseEvents,
-
     };
 
     if (req.body.images) {
@@ -117,18 +135,18 @@ async function updateUser(req: Request, res: Response) {
     }
 
     if (req.body.exerciseEvents) {
-        for (let x in req.body.exerciseEvents) {
-            let eventId = req.body.exerciseEvents[x];
+        for (const x of req.body.exerciseEvents) {
+            const eventId = req.body.exerciseEvents[x];
             if (!Types.ObjectId.isValid(eventId)) {
                 res.status(404).send({ message: `ExerciseEvent with id: ${eventId} not found` });
                 return;
             }
-            let result = await ExerciseEvent.findById(eventId); 
+            const result = await ExerciseEvent.findById(eventId);
 
             if (!result) {
                 err = true;
-                res.status(404).send({ 
-                    message: `ExerciseEvent with id ${eventId} not found`
+                res.status(404).send({
+                    message: `ExerciseEvent with id ${eventId} not found`,
                 });
                 return;
             }
@@ -140,7 +158,6 @@ async function updateUser(req: Request, res: Response) {
     }
 
     console.log(toUpdate);
-
 
     res.send(await User.findOneAndUpdate({ _id: id }, toUpdate, { new: true }));
 
@@ -160,7 +177,6 @@ async function deleteUser(req: Request, res: Response) {
     }
 
     res.send(await User.findByIdAndDelete(req.params.id));
-
 }
 
 export default (router: Router) => {

@@ -7,7 +7,7 @@ export interface IUser extends Document {
     profile_image: string;
     bio: string;
     images: string[];
-    exerciseEvents: String[];
+    exerciseEvents: string[];
 }
 
 // tslint:disable-next-line: variable-name
@@ -16,6 +16,7 @@ export const UserSchema = new Schema({
         type: String,
         unique: true,
         required: true,
+        minlength: 3,
     },
     password: {
         type: String,
