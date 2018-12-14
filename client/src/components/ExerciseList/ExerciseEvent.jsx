@@ -1,35 +1,21 @@
 import React from 'react';
 
-const ExerciseEvent = props => {
-  let fieldsToRender = [];
-  if (props.event.weight) {
-    fieldsToRender.append(<p>{props.event.weight} pounds</p>);
-  }
-  if (props.event.sets) {
-    fieldsToRender.append(<p>{props.event.sets} sets</p>);
-  }
-  if (props.event.reps) {
-    fieldsToRender.append(<p>{props.event.reps} reps</p>);
-  }
-
-  console.log(`fieldsToRender: `);
-  console.log(fieldsToRender);
-
+const ExerciseEvent = ({ exercise: { name, timestamp, weight, sets, reps }}) => {
   return (
     <div className="card">
       <div className="card-content">
         <div className="media">
           <div className="media-content">
-            <p className="title is-4">{props.event.exercise.name}</p>
+            <p className="title is-4">{name}</p>
           </div>
         </div>
 
         <div className="content">
-          {fieldsToRender}
+          {weight && <p>{weight} pounds</p>}
+          {sets && <p>{sets} sets</p>}
+          {reps && <p>{reps} reps</p>}
           <br />
-          <time dateTime={props.exercise.timestamp}>
-            {props.exercise.timestamp}
-          </time>
+          <time dateTime={timestamp}>{timestamp}</time>
         </div>
       </div>
     </div>
