@@ -1,32 +1,34 @@
 import React from 'react';
 
-export const ExerciseEvent = () => {
+export const ExerciseEvent = (props) => {
+
+    let fieldsToRender = []
+    if (props.event.weight) {
+        fieldsToRender.append(<p>{props.event.weight} pounds</p>);
+    }
+    if (props.event.sets) {
+        fieldsToRender.append(<p>{props.event.sets} sets</p>);
+    }
+    if (props.event.reps) {
+        fieldsToRender.append(<p>{props.event.reps} reps</p>);
+    }
+
+    console.log(`fieldsToRender: `);
+    console.log(fieldsToRender);
+
     return (
         <div className="card">
-            <div className="card-image">
-                <figure className="image is-4by3">
-                    <img src={`http://placehold.it/400x20&text=slide1`} alt="Exercise image" />
-                </figure>
-            </div>
             <div className="card-content">
                 <div className="media">
-                    <div className="media-left">
-                        <figure className="image is-48x48">
-                            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image" />
-                        </figure>
-                    </div>
                     <div className="media-content">
-                        <p className="title is-4">John Smith</p>
-                        <p className="subtitle is-6">@johnsmith</p>
+                        <p className="title is-4">{props.event.exercise.name}</p>
                     </div>
                 </div>
 
                 <div className="content">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-                    <a href="#">#css</a> <a href="#">#responsive</a>
+                    {fieldsToRender.map(f => f)}
                     <br />
-                    <time dateTime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                    <time dateTime={props.exercise.timestamp}>{props.exercise.timestamp}</time>
                 </div>
             </div>
         </div>
