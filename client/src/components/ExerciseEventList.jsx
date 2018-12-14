@@ -1,5 +1,4 @@
 import React from 'react';
-import { ExerciseEvent } from './ExerciseEvent';
 import axios from 'axios';
 
 export class ExerciseEventList extends React.Component{
@@ -11,6 +10,7 @@ export class ExerciseEventList extends React.Component{
 
     componentDidMount() {
         // Get the user id from the redux store
+        let user_id;
         
         // Get the exercise event list from the db
         axios.get(`/api/${user_id}`)
