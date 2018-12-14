@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loginUser } from '../../../actions';
+import { loginUser, USER_LOGIN_SUCCESS } from '../../../actions';
+import { withCookies } from 'react-cookie';
 
 class Login extends React.Component {
   constructor(props) {
@@ -24,7 +25,18 @@ class Login extends React.Component {
     event.preventDefault();
 
     try {
-      await this.props.loginUser(this.state.username, this.state.password);
+      const res = await this.props.loginUser(
+        this.state.username,
+        this.state.password
+      );
+      console.log(res);
+
+      if (res.type === USER_LOGIN_SUCCESS) {
+        const { sID } = res.data;
+
+        this.props.cookies.set('sID', sID);
+      }
+
       this.props.history.push('/');
     } catch (err) {
       this.setState({
@@ -79,4 +91,4 @@ class Login extends React.Component {
 export default connect(
   null,
   { loginUser }
-)(Login);
+)(withCookies(Login));

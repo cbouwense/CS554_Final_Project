@@ -1,6 +1,7 @@
 import { compare, hash } from 'bcryptjs';
 import { Request, Response, Router } from 'express';
 import { Types } from 'mongoose';
+import { v4 } from 'uuid';
 import { ExerciseEvent } from '../models/exercise-event';
 import { IUser, User } from '../models/user';
 import { handleErrors } from '../util';
@@ -10,13 +11,17 @@ const saltLength = 11;
 async function createUser(req: Request, res: Response) {
     const { username, password } = req.body;
 
-    if (username == null || username.length === 0 ||
-        password == null || password.length === 0) {
+    if (
+    username == null ||
+    username.length === 0 ||
+    password == null ||
+    password.length === 0
+  ) {
         res.status(400).send({ message: 'missing username or password' });
         return;
     }
 
-    if (await User.findOne({ username }) != null) {
+    if ((await User.findOne({ username })) != null) {
         res.status(400).send({ message: `User ${username} already exists` });
         return;
     }
@@ -50,14 +55,18 @@ async function getAllUsers(req: Request, res: Response): Promise<void> {
 
 async function getById(req: Request, res: Response) {
     if (!Types.ObjectId.isValid(req.params.id)) {
-        res.status(404).send({ message: `User with id: ${req.params.id} not found` });
+        res
+      .status(404)
+      .send({ message: `User with id: ${req.params.id} not found` });
         return;
     }
 
     const result = await User.findById(req.params.id);
 
     if (!result) {
-        res.status(404).send({ message: `User with id: ${req.params.id} not found` });
+        res
+      .status(404)
+      .send({ message: `User with id: ${req.params.id} not found` });
         return;
     }
 
@@ -75,22 +84,27 @@ async function loginUser(req: Request, res: Response) {
     const result = await User.findOne({ username });
 
     if (!result) {
-        res.status(404).send({ message: `User with username: ${username} not found` });
+        res
+      .status(404)
+      .send({ message: `User with username: ${username} not found` });
         return;
     }
 
     try {
-        if (!await compare(password, result.password)) {
+        if (!(await compare(password, result.password))) {
             res.status(404).send({ message: 'Invalid password' });
             return;
         }
 
         const exerciseEvents = await ExerciseEvent.find({ userId: result._id });
 
+        const sID = await createSession(result);
+
         res.send({
             _id: result._id,
             username: result.username,
             profile_image: result.profile_image,
+            sID,
             exerciseEvents,
         });
     } catch (err) {
@@ -99,6 +113,40 @@ async function loginUser(req: Request, res: Response) {
         return;
     }
 }
+
+async function createSession(user: IUser) {
+    const { _id, sIDs } = user;
+
+    const sID = v4();
+    sIDs.push(sID);
+
+    try {
+        await User.findOneAndUpdate({ _id }, { sIDs });
+    } catch (e) {
+        console.log(e.message);
+    }
+
+    return sID;
+}
+
+// async function getBySession(req: Request, res: Response) {
+//   const result = await User.findOne(req.params.sID);
+
+//   if (!result) {
+//     res
+//       .status(404)
+//       .send({ message: `User with sID: ${req.params.sID} not found` });
+//     return;
+//   }
+
+//   res.send({
+//     _id: result._id,
+//     username: result.username,
+//     profile_image: result.profile_image,
+//     bio: result.bio,
+//     images: result.images,
+//   });
+// }
 
 async function updateUser(req: Request, res: Response) {
     const id = req.params.id;
@@ -123,7 +171,7 @@ async function updateUser(req: Request, res: Response) {
     };
 
     if (req.body.images) {
-        req.body.images.forEach(async(elem) => {
+        req.body.images.forEach(async (elem: any) => {
             if (toUpdate.images.indexOf(elem) === -1) {
                 toUpdate.images.push(elem);
             }
@@ -137,7 +185,9 @@ async function updateUser(req: Request, res: Response) {
 
 async function deleteUser(req: Request, res: Response) {
     if (!Types.ObjectId.isValid(req.params.id)) {
-        res.status(404).send({ message: `User with id: ${req.params.id} not found` });
+        res
+      .status(404)
+      .send({ message: `User with id: ${req.params.id} not found` });
         return;
     }
 
