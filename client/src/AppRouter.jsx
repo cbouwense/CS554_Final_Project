@@ -14,6 +14,8 @@ const AppRouter = () => {
           {/* Login and Registration */}
           <Route path="/account/login" component={Login} />
           <Route path="/account/register" component={Register} />
+
+          <Route path="/exerciseEvents/new" component={ExerciseEventForm} />
         </Switch>
       </div>
     </HashRouter>
