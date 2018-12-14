@@ -13,6 +13,8 @@ mongoose.connect('mongodb://localhost/mothballs', { useNewUrlParser: true })
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 
+app.use(express.static('public'));
+
 app.use('/api', constructRoutes());
 
 app.use('*', (err, req, res, next) => {

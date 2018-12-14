@@ -105,7 +105,7 @@ async function update(req: Request, res: Response) {
 
 async function deleteExerciseEvent(req: Request, res: Response) {
     if (!Types.ObjectId.isValid(req.params.id)) {
-        res.status(404).send({ message: `Exercise with id: ${req.params.id} not found` });
+        res.status(404).send({ message: `ExerciseEvent with id: ${req.params.id} not found` });
         return;
     }
 
