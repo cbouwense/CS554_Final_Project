@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const ExerciseEvent = props => {
+const ExerciseEvent = props => {
   let fieldsToRender = [];
   if (props.event.weight) {
     fieldsToRender.append(<p>{props.event.weight} pounds</p>);
@@ -35,3 +35,5 @@ export const ExerciseEvent = props => {
     </div>
   );
 };
+
+export default ExerciseEvent;

@@ -33,3 +33,19 @@ class ExerciseListContainer extends React.Component {
 }
 
 export default ExerciseListContainer;
+
+import { connect } from 'react-redux';
+import ExerciseEventList from './ExerciseEventList';
+
+const mapStateToProps = state => {
+  const user_id = state;
+
+    // Get the exercise event list from the db
+    const user = axios.get(`/api/${user_id}`);
+
+  return {exercises: user.exerciseEvents};
+};
+
+const ExerciseList = connect(mapStateToProps)(ExerciseEventList);
+
+export default ExerciseList;

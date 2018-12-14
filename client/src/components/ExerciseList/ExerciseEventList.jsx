@@ -1,7 +1,7 @@
 import React from 'react';
 import { ExerciseEvent } from './ExerciseEvent';
 
-export const ExerciseEventList = ({ exerciseList }) => (
+const ExerciseEventList = ({ exerciseList }) => (
   <div>
     <ul>
       {exerciseList.map(e => (
@@ -12,3 +12,5 @@ export const ExerciseEventList = ({ exerciseList }) => (
     </ul>
   </div>
 );
+
+export default ExerciseEventList;

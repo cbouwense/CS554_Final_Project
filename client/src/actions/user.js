@@ -4,10 +4,13 @@ import { USER_LOGGED_IN, USER_LOGIN_FAILURE } from './actionTypes';
 export function loginUser(username, password) {
   return async dispatch => {
     try {
-      const res = await axios.post('http://localhost:4000/api/user/login', { username, password });
+      const res = await axios.post('http://localhost:4000/api/user/login', {
+        username,
+        password
+      });
       return dispatch({
         type: USER_LOGGED_IN,
-        data: res.data,
+        data: res.data
       });
     } catch (err) {
       console.error(err);
@@ -22,7 +25,7 @@ export function loginUser(username, password) {
           data: {
             message: err.message
           }
-        })
+        });
       }
     }
   };
