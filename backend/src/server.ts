@@ -1,4 +1,5 @@
 import * as bodyParser from 'body-parser';
+import * as cors from 'cors';
 import * as express from 'express';
 import * as mongoose from 'mongoose';
 import morgan = require('morgan');
@@ -10,8 +11,9 @@ mongoose.connect('mongodb://localhost/mothballs', { useNewUrlParser: true })
     .then(() => console.log('[mongoose]: connection successful'))
     .catch(err => console.log(`[mongoose]: ${err}`));
 
-app.use(bodyParser.json());
 app.use(morgan('dev'));
+app.use(cors());
+app.use(bodyParser.json());
 
 app.use(express.static('public'));
 
