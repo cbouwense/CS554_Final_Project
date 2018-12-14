@@ -27,7 +27,7 @@ async function createUser(req: Request, res: Response) {
         user = new User({
             username,
             password: await hash(password, saltLength),
-            profile_image: '/defaultprofile.png',
+            profile_image: 'http://localhost:4000/defaultprofile.png',
             bio: null,
             images: [],
             exerciseEvents: [],
@@ -86,7 +86,7 @@ async function loginUser(req: Request, res: Response) {
     }
 
     try {
-        if (await compare(password, result.password)) {
+        if (!await compare(password, result.password)) {
             res.status(404).send({ message: 'Invalid password' });
             return;
         }
@@ -94,6 +94,7 @@ async function loginUser(req: Request, res: Response) {
         res.send({
             _id: result._id,
             username: result.username,
+            profile_image: result.profile_image,
         });
     } catch (err) {
         console.error(err);

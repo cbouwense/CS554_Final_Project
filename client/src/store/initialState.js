@@ -1,4 +1,7 @@
 export default {
-  user: null,
+  auth: {
+    user: null,
+    error: null
+  },
   exerciseEvents: [],
 };
