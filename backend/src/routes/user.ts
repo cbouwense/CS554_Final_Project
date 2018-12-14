@@ -86,7 +86,7 @@ async function loginUser(req: Request, res: Response) {
     }
 
     try {
-        if (await compare(password, result.password)) {
+        if (!await compare(password, result.password)) {
             res.status(404).send({ message: 'Invalid password' });
             return;
         }
