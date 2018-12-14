@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { loginUser } from '../../../actions';
+import get from 'lodash/get';
 
 class Login extends React.Component {
   constructor(props) {
@@ -30,7 +31,9 @@ class Login extends React.Component {
   render() {
     const { username, password } = this.state;
 
-    return (
+    return <>
+      {this.props.error &&
+      <p className="notification is-danger">{this.props.error}</p>}
       <form onSubmit={this.handleSubmit}>
         <label>
           Username:
@@ -56,11 +59,11 @@ class Login extends React.Component {
           <button type="submit" value="submit">Submit</button>
         </label>
       </form>
-    );
+    </>;
   }
 }
 
 export default connect(
-  null,
+  state => ({ error: get(state, 'user.error') }),
   { loginUser }
 )(Login);
