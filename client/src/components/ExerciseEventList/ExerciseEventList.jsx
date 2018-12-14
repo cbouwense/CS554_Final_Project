@@ -5,7 +5,7 @@ const ExerciseEventList = ({ exerciseList }) => (
   <div>
     <ul>
       {exerciseList.map(e => (
-        <li key={`ExcerciseEvent${e._id}`}>
+        <li key={e._id}>
           <ExerciseEvent exercise={e} />
         </li>
       ))}
