@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { deleteExerciseEvent } from '../../actions';
+import { deleteExerciseEvent } from '../../redux/actions';
 
 
 const ExerciseEvent = ({
