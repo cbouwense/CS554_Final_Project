@@ -1,8 +1,12 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as express from 'express';
 import * as mongoose from 'mongoose';
 import morgan = require('morgan');
+import { mqpublish } from './amqp';
 import { constructRoutes } from './routes';
 
 const app = express();
