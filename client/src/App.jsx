@@ -7,9 +7,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Navbar />
-        <header className="App__header">
-          <h1 className="App__header__title">Moth Balls</h1>
-        </header>
+        {this.props.children}
       </div>
     );
   }
