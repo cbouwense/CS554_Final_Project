@@ -1,6 +1,9 @@
 import initialState from '../store/initialState';
-import { EXERCISE_EVENT_CREATED, USER_LOGIN_SUCCESS } from '../actions';
-import { USER_SESSION_RESUME } from '../actions/actionTypes';
+import {
+  EXERCISE_EVENT_CREATED,
+  USER_LOGIN_SUCCESS,
+  USER_SESSION_RESUME
+} from '../actions';
 
 export default function exerciseEventsReducer(
   state = initialState.exerciseEvents,
