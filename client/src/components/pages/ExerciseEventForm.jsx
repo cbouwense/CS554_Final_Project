@@ -2,7 +2,6 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createExerciseEvent } from '../../actions';
-import get from 'lodash/get';
 
 class ExerciseEventForm extends React.Component {
   state = {
@@ -161,7 +160,7 @@ class ExerciseEventForm extends React.Component {
 export default connect(
   state => ({
     exercises: state.exercises,
-    userId: get(state.auth.user, '_id')
+    userId: state.auth.user._id
   }),
   { createExerciseEvent }
 )(ExerciseEventForm);

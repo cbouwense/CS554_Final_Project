@@ -46,31 +46,18 @@ class Navbar extends React.Component {
           </a>
         </div>
 
-        <div
-          className={`navbar-menu ${this.state.burgerOpen && 'is-active'}`}
-          id="navbar"
-        >
-          <div className="navbar-end">
-            {user ? (
-              <>
-                <a className="navbar-item" onClick={this.logout}>
-                  Logout {user.username}
-                </a>
-                <p className="navbar-item">
-                  <img src={user.profile_image} alt="profile" />
-                </p>
-              </>
-            ) : (
-              <>
-                <NavLink to="/account/login" className="navbar-item">
-                  Login
-                </NavLink>
-                <NavLink to="/account/register" className="navbar-item">
-                  Register
-                </NavLink>
-              </>
-            )}
-          </div>
+      <div className={`navbar-menu ${this.state.burgerOpen && 'is-active'}`} id="navbar">
+        <div className="navbar-end">
+          {user._id
+          ? <>
+              <Link className="navbar-item" to="/exerciseEvents/new">new exercise event</Link>
+              <a className="navbar-item" onClick={this.logout}>Logout {user.username}</a>
+              <p className="navbar-item"><img src={user.profile_image} alt="profile" /></p>
+            </>
+          : <>
+              <Link to="/account/login" className="navbar-item">Login</Link>
+              <Link to="/account/register" className="navbar-item">Register</Link>
+            </>}
         </div>
       </nav>
     );

@@ -6,7 +6,7 @@ export default function authReducer(state = initialState.auth, action) {
     case USER_LOGIN_SUCCESS:
       return { ...state, user: action.data }
     case USER_LOGOUT:
-      return { ...state, user: null }
+      return { ...state, user: initialState.auth.user }
     default:
       return state
   }
