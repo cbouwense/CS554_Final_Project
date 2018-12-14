@@ -41,6 +41,7 @@ async function createUser(req: Request, res: Response) {
         _id: saved._id,
         username: saved.username,
         profile_image: saved.profile_image,
+        exerciseEvents: [],
     });
 }
 
