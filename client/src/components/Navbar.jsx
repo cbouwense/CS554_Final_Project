@@ -51,7 +51,7 @@ class Navbar extends React.Component {
             {user._id
             ? <>
                 <a className="navbar-item" onClick={this.logout}>Logout {user.username}</a>
-                <p className="navbar-item"><img src={user.profile_image} alt="profile" /></p>
+              <Link className="navbar-item" to="/account/profile"><img src={user.profile_image} alt="profile" /></Link>
               </>
             : <>
                 <NavLink to="/account/login" className="navbar-item">Login</NavLink>

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import App from './App';
-import { Home, Login, Register, ExerciseEventForm, ExerciseInfo } from './components';
 
+import { Home, Login, Register, Profile, ExerciseEventForm, ExerciseInfo } from './components';
 
 const AppRouter = () => {
   return (
@@ -15,6 +15,7 @@ const AppRouter = () => {
           {/* Login and Registration */}
           <Route path="/account/login" component={Login} />
           <Route path="/account/register" component={Register} />
+          <Route path="/account/profile" component={Profile} />
 
           <Route path="/exerciseEvents/new" component={ExerciseEventForm} />
           <Route path="/exerciseInfo" component={ExerciseInfo} />
