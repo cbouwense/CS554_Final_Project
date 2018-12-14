@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Navbar } from './components';
 import { connect } from 'react-redux';
-import { getExercises } from './redux/actions';
+import { getExercises } from './actions';
 import { withRouter } from 'react-router';
 import 'bulma/css/bulma.css';
 

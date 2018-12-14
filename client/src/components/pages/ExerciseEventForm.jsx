@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { createExerciseEvent } from '../../redux/actions';
+import { createExerciseEvent } from '../../actions';
 
 class ExerciseEventForm extends React.Component {
   state = {

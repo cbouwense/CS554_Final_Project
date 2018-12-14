@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateExerciseEvent } from '../../redux/actions';
+import { updateExerciseEvent } from '../../actions';
 
 class ExerciseEventEdit extends React.Component {
   constructor(props) {
