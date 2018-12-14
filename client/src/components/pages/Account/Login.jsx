@@ -1,7 +1,8 @@
 import React from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { loginUser } from '../../../actions';
 
-export class Login extends React.Component {
+class Login extends React.Component {
   constructor(props) {
     super(props);
 
@@ -23,20 +24,7 @@ export class Login extends React.Component {
   handleSubmit = async (event) => {
     event.preventDefault();
 
-    try {
-      const res = await axios.post('/api/user/login', {
-        username: this.state.username,
-        password: this.state.password
-      });
-
-      console.log(`Logged in ${res.data._id}, ${res.data.username}`);
-    } catch (err) {
-      this.setState({
-        username: '',
-        password: '',
-        error: err.response.data.message
-      });
-    }
+    console.log(this.props.loginUser(this.state.username, this.state.password));
   };
 
   render() {
@@ -71,3 +59,8 @@ export class Login extends React.Component {
     );
   }
 }
+
+export default connect(
+  null,
+  { loginUser }
+)(Login);
