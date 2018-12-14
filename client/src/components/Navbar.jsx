@@ -2,16 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import { logoutUser } from '../actions';
+import Logout from './Logout';
 
 class Navbar extends React.Component {
   state = {
     burgerOpen: false
-  };
-
-  logout = () => {
-    this.props.logoutUser();
-    this.props.history.push('/account/login');
   };
 
   render() {
@@ -53,9 +48,7 @@ class Navbar extends React.Component {
           <div className="navbar-end">
             {user ? (
               <>
-                <a className="navbar-item" onClick={this.logout}>
-                  Logout {user.username}
-                </a>
+                <Logout user={user} history={this.props.history} />
                 <p className="navbar-item">
                   <img src={user.profile_image} alt="profile" />
                 </p>
@@ -78,8 +71,5 @@ class Navbar extends React.Component {
 }
 
 export default withRouter(
-  connect(
-    state => ({ user: state.auth.user }),
-    { logoutUser }
-  )(Navbar)
+  connect(state => ({ user: state.auth.user }))(Navbar)
 );

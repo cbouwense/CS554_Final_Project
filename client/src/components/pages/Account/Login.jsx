@@ -29,7 +29,6 @@ class Login extends React.Component {
         this.state.username,
         this.state.password
       );
-      console.log(res);
 
       if (res.type === USER_LOGIN_SUCCESS) {
         const { sID } = res.data;

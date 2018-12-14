@@ -82,7 +82,6 @@ async function getById(req: Request, res: Response) {
 async function loginUser(req: Request, res: Response) {
     const { username, password } = req.body;
     const result = await User.findOne({ username });
-
     if (!result) {
         res
       .status(404)
@@ -129,24 +128,56 @@ async function createSession(user: IUser) {
     return sID;
 }
 
-// async function getBySession(req: Request, res: Response) {
-//   const result = await User.findOne(req.params.sID);
+async function getBySession(req: Request, res: Response) {
+    const { sID } = req.body;
+    console.log(`sID: ${sID}`);
 
-//   if (!result) {
-//     res
-//       .status(404)
-//       .send({ message: `User with sID: ${req.params.sID} not found` });
-//     return;
-//   }
+    try {
+        const result = await User.findOne({ sIDs: sID });
 
-//   res.send({
-//     _id: result._id,
-//     username: result.username,
-//     profile_image: result.profile_image,
-//     bio: result.bio,
-//     images: result.images,
-//   });
-// }
+        if (!result) {
+            res.status(404).send({ message: `User with sID: ${sID} not found` });
+            return;
+        }
+
+        const exerciseEvents = await ExerciseEvent.find({ userId: result._id });
+
+        res.send({
+            _id: result._id,
+            username: result.username,
+            profile_image: result.profile_image,
+            bio: result.bio,
+            sID,
+            images: result.images,
+            exerciseEvents,
+        });
+    } catch (e) {
+        console.log(e.message);
+    }
+}
+
+async function logoutSession(req: Request, res: Response) {
+    const { sID } = req.body;
+
+    try {
+        const result = await User.findOne({ sIDs: sID });
+
+        if (!result) {
+            console.log(`No such sID: ${sID}`);
+
+            res.status(404).send({ message: `User with sID: ${sID} not found` });
+            return;
+        }
+
+        const { _id, sIDs } = result;
+        const i = sIDs.indexOf(sID);
+        sIDs.splice(i, 1);
+
+        res.send(await User.findOneAndUpdate({ _id }, { sIDs }));
+    } catch (e) {
+        console.log(e.message);
+    }
+}
 
 async function updateUser(req: Request, res: Response) {
     const id = req.params.id;
@@ -204,6 +235,8 @@ async function deleteUser(req: Request, res: Response) {
 export default (router: Router) => {
     router.get('/user', handleErrors(getAllUsers));
     router.get('/user/:id', handleErrors(getById));
+    router.post('/user/session/', handleErrors(getBySession));
+    router.post('/user/logout/', handleErrors(logoutSession));
     router.post('/user/login', handleErrors(loginUser));
     router.post('/user', handleErrors(createUser));
     router.patch('/user/:id', handleErrors(updateUser));

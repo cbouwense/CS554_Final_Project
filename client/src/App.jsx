@@ -2,21 +2,31 @@ import * as React from 'react';
 import { Navbar } from './components';
 import { connect } from 'react-redux';
 import { getExercises } from './actions';
+import { resumeUserSession } from './actions/auth';
 import { withRouter } from 'react-router';
 import 'bulma/css/bulma.css';
+import { withCookies } from 'react-cookie';
 
 class App extends React.Component {
   componentDidMount() {
-    this.props.getExercises()
+    const { user, cookies, getExercises, resumeUserSession } = this.props;
+
+    if (!user) {
+      const sID = cookies.get('sID');
+
+      if (sID) {
+        resumeUserSession(sID);
+      }
+    }
+
+    getExercises();
   }
 
   render() {
     return (
       <div className="App">
         <Navbar />
-        <div className="container">
-          {this.props.children}
-        </div>
+        <div className="container">{this.props.children}</div>
       </div>
     );
   }
@@ -24,7 +34,7 @@ class App extends React.Component {
 
 export default withRouter(
   connect(
-    null,
-    { getExercises }
-  )(App)
+    state => ({ user: state.auth.user }),
+    { getExercises, resumeUserSession }
+  )(withCookies(App))
 );
