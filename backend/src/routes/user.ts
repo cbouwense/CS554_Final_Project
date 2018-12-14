@@ -116,20 +116,6 @@ async function updateUser(req: Request & { file: Express.MulterS3.File }, res: R
         res.status(404).send({ message: `User with id ${id} not found` });
     }
 
-    // Upload profile image to S3 and get its URL
-    let profileImageURL = null;
-    if (req.body.profile_image) {
-        profileImageURL = req.file;
-    }
-    console.log(`profileImageURL: ${profileImageURL}`);
-
-    // Upload the user images to S3 and get their URLs
-    if (req.body.images) {
-        req.body.images.forEach(async (elem) => {
-            console.log('bepis');
-        });
-    }
-
     const toUpdate = {
         username: req.body.username || user.username,
         password: req.body.password || user.password,
