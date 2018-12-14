@@ -9,7 +9,8 @@
         "test": "jest",
         "start": "node ./build/server.js",
         "watch": "nodemon --exec ts-node -- ./src/server.ts",
-        "lint": "tslint -p . -c tslint.json"
+        "lint": "tslint -p . -c tslint.json",
+        "seed": "ts-node ./seed.ts"
     },
     "husky": {
         "hooks": {
