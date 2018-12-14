@@ -3,6 +3,9 @@ import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import App from './App';
 import { Home, Login, Register, ExerciseEventForm } from './components';
 
+// ? I got an error trying to import it like other pages
+import { ExerciseInfo } from './components/pages/ExerciseInfo';
+
 const AppRouter = () => {
   return (
     <BrowserRouter>
@@ -16,6 +19,7 @@ const AppRouter = () => {
           <Route path="/account/register" component={Register} />
 
           <Route path="/exerciseEvents/new" component={ExerciseEventForm} />
+          <Route path="/exerciseInfo" component={ExerciseInfo} />
         </Switch>
       </div>
     </BrowserRouter>

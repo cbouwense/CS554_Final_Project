@@ -1,5 +1,5 @@
 import React from 'react';
-import ExerciseList from '../ExerciseList';
+import ExerciseEventList from '../ExerciseEventList';
 
 export const Home = () => (
   <main>
@@ -7,6 +7,6 @@ export const Home = () => (
       Moth ball's trainging thing. It'll get you ripped, bro.
     </p>
 
-    <ExerciseList />
+    <ExerciseEventList />
   </main>
 );
