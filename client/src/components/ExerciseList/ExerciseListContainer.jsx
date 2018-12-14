@@ -1,5 +1,6 @@
 import React from 'react';
-import ExercistEventList from './ExerciseEventList';
+import axios from 'axios';
+import { ExerciseEventList } from './ExerciseEventList';
 
 class ExerciseListContainer extends React.Component {
   constructor(props) {
@@ -21,14 +22,14 @@ class ExerciseListContainer extends React.Component {
           exerciseList: user.exerciseEvents
         });
       })
-      .catch(err => {
+      .catch(error => {
         console.log(error);
       });
   }
 
   render() {
-    return <ExercistEventList exerciseList={this.state.exerciseList} />;
+    return <ExerciseEventList exerciseList={this.state.exerciseList} />;
   }
 }
 
-export default ExerciseEventList;
+export default ExerciseListContainer;

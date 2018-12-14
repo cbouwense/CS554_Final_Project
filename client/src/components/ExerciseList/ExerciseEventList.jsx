@@ -1,7 +1,7 @@
 import React from 'react';
-import axios from 'axios';
+import { ExerciseEvent } from './ExerciseEvent';
 
-const ExerciseEventList = ({ exerciseList }) => (
+export const ExerciseEventList = ({ exerciseList }) => (
   <div>
     <ul>
       {exerciseList.map(e => (
@@ -12,5 +12,3 @@ const ExerciseEventList = ({ exerciseList }) => (
     </ul>
   </div>
 );
-
-export default ExercistEventList;

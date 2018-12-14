@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { AppRouter } from './Router';
+import AppRouter from './AppRouter';
 import registerServiceWorker from './registerServiceWorker';
 import { store } from './store';
 import { Provider } from 'react-redux';
@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 ReactDOM.render(
   <Provider store={store}>
     <AppRouter />
-  </Provider>
-  , document.getElementById('root'),
+  </Provider>,
+  document.getElementById('root')
 );
 registerServiceWorker();
