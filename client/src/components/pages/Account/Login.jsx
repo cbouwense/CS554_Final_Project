@@ -34,6 +34,7 @@ class Login extends React.Component {
     return <>
       {this.props.error &&
       <p className="notification is-danger">{this.props.error}</p>}
+
       <form onSubmit={this.handleSubmit}>
         <label>
           Username:
