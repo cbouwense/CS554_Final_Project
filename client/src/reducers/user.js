@@ -1,4 +1,4 @@
-import { initialState } from '../store';
+import initialState from '../store/initialState';
 import { USER_LOGGED_IN, USER_LOGIN_FAILURE } from '../actions';
 
 export default function userReducer(state = initialState.user, action) {
