@@ -7,7 +7,7 @@ export interface IUser extends Document {
     profile_image: string;
     bio: string;
     images: string[];
-    exerciseEvents: IExerciseEvent[];
+    exerciseEvents: string[];
 }
 
 // tslint:disable-next-line: variable-name
@@ -24,7 +24,7 @@ export const UserSchema = new Schema({
     profile_image: String,  // URL to image store
     bio: String,
     images: [String],
-    exerciseEvents: [ExerciseEventSchema],
+    exerciseEvents: [String],
 });
 
 // tslint:disable-next-line: variable-name
