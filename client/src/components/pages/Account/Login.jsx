@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { loginUser, USER_LOGIN_SUCCESS } from '../../../actions';
-import get from 'lodash/get';
 
 class Login extends React.Component {
   constructor(props) {
