@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { deleteExerciseEvent } from '../../redux/actions';
 
-
 const ExerciseEvent = ({
   exercise: { _id, exercise, timestamp, weight, sets, reps },
-  deleteExerciseEvent
+  deleteExerciseEvent,
+  toggleEdit
 }) => {
   return (
     <div className="card">
@@ -27,10 +27,14 @@ const ExerciseEvent = ({
           <time dateTime={timestamp}>{timestamp}</time>
         </div>
 
-        <button onClick={() => deleteExerciseEvent({_id})}>Delete</button>
+        <button onClick={() => deleteExerciseEvent({ _id })}>Delete</button>
+        <button onClick={toggleEdit}>Edit</button>
       </div>
     </div>
   );
 };
 
-export default connect(null, {deleteExerciseEvent})(ExerciseEvent);
+export default connect(
+  null,
+  { deleteExerciseEvent }
+)(ExerciseEvent);
