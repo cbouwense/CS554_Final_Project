@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loginUser } from '../../../actions';
-import get from 'lodash/get';
+import { loginUser, USER_LOGIN_SUCCESS } from '../../../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -10,7 +9,6 @@ class Login extends React.Component {
     this.state = {
       username: '',
       password: '',
-      error: null
     };
   }
 
@@ -25,7 +23,9 @@ class Login extends React.Component {
   handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log(this.props.loginUser(this.state.username, this.state.password));
+    const res = await this.props.loginUser(this.state.username, this.state.password);
+    if (res.type === USER_LOGIN_SUCCESS)
+      this.props.history.push('/');
   };
 
   render() {
@@ -64,6 +64,6 @@ class Login extends React.Component {
 }
 
 export default connect(
-  state => ({ error: get(state, 'user.error') }),
+  state => ({ error: state.auth.error }),
   { loginUser }
 )(Login);
