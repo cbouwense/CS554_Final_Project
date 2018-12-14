@@ -25,7 +25,7 @@ const ExerciseEvent = props => {
         </div>
 
         <div className="content">
-          {fieldsToRender.map(f => f)}
+          {fieldsToRender}
           <br />
           <time dateTime={props.exercise.timestamp}>
             {props.exercise.timestamp}
