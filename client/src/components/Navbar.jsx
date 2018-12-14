@@ -33,7 +33,7 @@ class Navbar extends React.Component {
 
       <div className={`navbar-menu ${this.state.burgerOpen && 'is-active'}`} id="navbar">
         <div className="navbar-end">
-          {user
+          {user._id
           ? <>
               <Link className="navbar-item" to="/exerciseEvents/new">new exercise event</Link>
               <a className="navbar-item" onClick={this.logout}>Logout {user.username}</a>
