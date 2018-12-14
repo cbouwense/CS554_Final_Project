@@ -18,8 +18,8 @@ const ExerciseEvent = ({
             <>
               <p>Body Parts Worked</p>
               <ul>
-                {bodyparts_worked.map(part => (
-                  <li>{part}</li>
+                {bodyparts_worked.map((part, i) => (
+                  <li key={i}>{part}</li>
                 ))}
               </ul>
             </>
@@ -28,8 +28,8 @@ const ExerciseEvent = ({
             <>
               <p>Equipment Needed</p>
               <ul>
-                {equipment.map(equip => (
-                  <li>{equip}</li>
+                {equipment.map((equip, i) => (
+                  <li key={i}>{equip}</li>
                 ))}
               </ul>
             </>
