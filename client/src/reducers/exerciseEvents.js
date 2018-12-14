@@ -6,7 +6,7 @@ export default function exerciseEventsReducer(state = initialState.exerciseEvent
     case EXERCISE_EVENT_CREATED:
       return [...state, action.data]
     case USER_LOGIN_SUCCESS:
-      return action.data.exerciseEvents
+      return action.data.exerciseEvents || null
     default:
       return state
   }
