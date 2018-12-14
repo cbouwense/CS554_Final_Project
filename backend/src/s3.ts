@@ -1,9 +1,6 @@
 import * as aws from 'aws-sdk';
-import dotenv from 'dotenv';
 import * as multer from 'multer';
 import * as multerS3 from 'multer-s3';
-
-dotenv.config();
 
 // Configuring the AWS environment
 aws.config.update({

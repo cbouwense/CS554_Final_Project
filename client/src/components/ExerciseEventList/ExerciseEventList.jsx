@@ -4,8 +4,8 @@ import ExerciseEvent from './ExerciseEvent';
 const ExerciseEventList = ({ exerciseList }) => (
   <div>
     <ul>
-      {exerciseList.map((e, i) => (
-        <li key={i}>
+      {exerciseList.map(e => (
+        <li key={e._id}>
           <ExerciseEvent exercise={e} />
         </li>
       ))}

@@ -1,6 +1,7 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { createExerciseEvent } from '../../actions'
+import { createExerciseEvent } from '../../actions';
 
 class ExerciseEventForm extends React.Component {
   state = {
@@ -10,17 +11,17 @@ class ExerciseEventForm extends React.Component {
     sets: '',
     reps: '',
     error: null
-  }
+  };
 
-  handleChange = (event) => {
-      event.preventDefault();
+  handleChange = event => {
+    event.preventDefault();
 
-      const { name, value } = event.currentTarget;
+    const { name, value } = event.currentTarget;
 
-      this.setState({ [name]: value });
-  }
+    this.setState({ [name]: value });
+  };
 
-  handleSubmit = async (event) => {
+  handleSubmit = async event => {
     event.preventDefault();
 
     let { exerciseId, timestamp, weight, sets, reps } = this.state;
@@ -50,69 +51,109 @@ class ExerciseEventForm extends React.Component {
         weight,
         sets,
         reps
-      })
+      });
       this.props.history.push('/');
     } catch (err) {
       this.setState({ error: err.message });
     }
-  }
+  };
 
   render() {
-    return <>
-      {this.state.error &&
-      <p className="notification is-danger">{this.state.error}</p>}
+    if (!this.props.userId) {
+      return <Redirect to="/account/login" />;
+    }
 
-      <form onSubmit={this.handleSubmit}>
-        <div className="field">
-          <label className="label">Exercise</label>
-          <div className="control">
-            <div className="select">
-              <select name="exerciseId" required value={this.state.exerciseId} onChange={this.handleChange}>
-                <option value={''} disabled>Pick an exercise</option>
-                {this.props.exercises.map((e, i) =>
-                  <option value={e._id} key={i}>{e.name}</option>
-                )}
-              </select>
+    return (
+      <>
+        {this.state.error && (
+          <p className="notification is-danger">{this.state.error}</p>
+        )}
+
+        <form onSubmit={this.handleSubmit}>
+          <div className="field">
+            <label className="label">Exercise</label>
+            <div className="control">
+              <div className="select">
+                <select
+                  name="exerciseId"
+                  required
+                  value={this.state.exerciseId}
+                  onChange={this.handleChange}
+                >
+                  <option value={''} disabled>
+                    Pick an exercise
+                  </option>
+                  {this.props.exercises.map((e, i) => (
+                    <option value={e._id} key={i}>
+                      {e.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="field">
-          <label className="label">Time</label>
-          <div className="control">
-            <input className="input" name="timestamp" type="datetime-local" required value={this.state.timestamp} onChange={this.handleChange} />
+          <div className="field">
+            <label className="label">Time</label>
+            <div className="control">
+              <input
+                className="input"
+                name="timestamp"
+                type="datetime-local"
+                required
+                value={this.state.timestamp}
+                onChange={this.handleChange}
+              />
+            </div>
           </div>
-        </div>
 
-        <div className="field">
-          <label className="label">Weight</label>
-          <div className="control">
-            <input className="input" type="number" name="weight" value={this.state.weight} onChange={this.handleChange} />
+          <div className="field">
+            <label className="label">Weight</label>
+            <div className="control">
+              <input
+                className="input"
+                type="number"
+                name="weight"
+                value={this.state.weight}
+                onChange={this.handleChange}
+              />
+            </div>
           </div>
-        </div>
 
-        <div className="field">
-          <label className="label">Sets</label>
-          <div className="control">
-            <input className="input" type="number" name="sets" value={this.state.sets} onChange={this.handleChange} />
+          <div className="field">
+            <label className="label">Sets</label>
+            <div className="control">
+              <input
+                className="input"
+                type="number"
+                name="sets"
+                value={this.state.sets}
+                onChange={this.handleChange}
+              />
+            </div>
           </div>
-        </div>
 
-        <div className="field">
-          <label className="label">Reps</label>
-          <div className="control">
-            <input className="input" type="number" name="reps" value={this.state.reps} onChange={this.handleChange} />
+          <div className="field">
+            <label className="label">Reps</label>
+            <div className="control">
+              <input
+                className="input"
+                type="number"
+                name="reps"
+                value={this.state.reps}
+                onChange={this.handleChange}
+              />
+            </div>
           </div>
-        </div>
 
-        <div className="field">
-          <div className="contrl">
-            <button className="button is-link">Submit</button>
+          <div className="field">
+            <div className="contrl">
+              <button className="button is-link">Submit</button>
+            </div>
           </div>
-        </div>
-
-      </form>
-    </>;
+        </form>
+      </>
+    );
   }
 }
 
@@ -122,4 +163,4 @@ export default connect(
     userId: state.auth.user._id
   }),
   { createExerciseEvent }
-)(ExerciseEventForm)
+)(ExerciseEventForm);

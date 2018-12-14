@@ -13,15 +13,14 @@ class Login extends React.Component {
     };
   }
 
-  handleChange = (event) => {
+  handleChange = event => {
     event.preventDefault();
 
     const { name, value } = event.currentTarget;
-
     this.setState({ [name]: value });
   };
 
-  handleSubmit = async (event) => {
+  handleSubmit = async event => {
     event.preventDefault();
 
     try {
@@ -39,36 +38,41 @@ class Login extends React.Component {
   render() {
     const { username, password } = this.state;
 
-    return <>
-      {this.state.error &&
-      <p className="notification is-danger">{this.state.error}</p>}
+    return (
+      <>
+        {this.state.error && (
+          <p className="notification is-danger">{this.state.error}</p>
+        )}
 
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Username:
-          <input
-            type="text"
-            name="username"
-            value={username}
-            onChange={this.handleChange}
-          />
-        </label>
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            Username:
+            <input
+              type="text"
+              name="username"
+              value={username}
+              onChange={this.handleChange}
+            />
+          </label>
 
-        <label>
-          Password:
-          <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={this.handleChange}
-          />
-        </label>
+          <label>
+            Password:
+            <input
+              type="password"
+              name="password"
+              value={password}
+              onChange={this.handleChange}
+            />
+          </label>
 
-        <label>
-          <button type="submit" value="submit">Submit</button>
-        </label>
-      </form>
-    </>;
+          <label>
+            <button type="submit" value="submit">
+              Submit
+            </button>
+          </label>
+        </form>
+      </>
+    );
   }
 }
 
