@@ -2,9 +2,9 @@ import { connect } from 'react-redux';
 import ExerciseEventList from './ExerciseEventList';
 
 const mapStateToProps = state => {
-  const { user } = state.auth;
+  const { exercises } = state.auth;
 
-  return { exercises: user ? user.exerciseEvents : [] };
+  return { exercises };
 };
 
 const ExerciseList = connect(mapStateToProps)(ExerciseEventList);
