@@ -20,5 +20,5 @@ const chan = (async () => {
 export async function mqpublish(msg) {
     const ch = await chan;
     if (!ch) throw new Error('no channel');
-    return ch.sendToQueue(queue, Buffer.from(JSON.stringify(msg)));
+    return await ch.sendToQueue(queue, Buffer.from(JSON.stringify(msg)));
 }
