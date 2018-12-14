@@ -35,6 +35,7 @@ class Navbar extends React.Component {
         <div className="navbar-end">
           {user
           ? <>
+              <Link className="navbar-item" to="/exerciseEvents/new">new exercise event</Link>
               <a className="navbar-item" onClick={this.logout}>Logout {user.username}</a>
               <p className="navbar-item"><img src={user.profile_image} alt="profile" /></p>
             </>
@@ -42,7 +43,6 @@ class Navbar extends React.Component {
               <Link to="/account/login" className="navbar-item">Login</Link>
               <Link to="/account/register" className="navbar-item">Register</Link>
             </>}
-          <Link className="navbar-item" to="/exerciseEvents/new">new ee</Link>
         </div>
       </div>
     </nav>;
