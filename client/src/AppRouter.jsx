@@ -1,11 +1,11 @@
 import React from 'react';
-import { Route, HashRouter, Switch } from 'react-router-dom';
+import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import App from './App';
-import { Home, Login, Register } from './components';
+import { Home, Login, Register, ExerciseEventForm } from './components';
 
 const AppRouter = () => {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <div>
         <Route component={App} />
         <Switch>
@@ -18,7 +18,7 @@ const AppRouter = () => {
           <Route path="/exerciseEvents/new" component={ExerciseEventForm} />
         </Switch>
       </div>
-    </HashRouter>
+    </BrowserRouter>
   );
 };
 

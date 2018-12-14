@@ -43,7 +43,7 @@ class ExerciseEventForm extends React.Component {
     }
 
     try {
-      const res = await this.props.createExerciseEvent({
+      await this.props.createExerciseEvent({
         exerciseId,
         userId: this.props.userId,
         timestamp,
@@ -68,6 +68,7 @@ class ExerciseEventForm extends React.Component {
           <div className="control">
             <div className="select">
               <select name="exerciseId" required value={this.state.exerciseId} onChange={this.handleChange}>
+                <option value={''} disabled>Pick an exercise</option>
                 {this.props.exercises.map((e, i) =>
                   <option value={e._id} key={i}>{e.name}</option>
                 )}

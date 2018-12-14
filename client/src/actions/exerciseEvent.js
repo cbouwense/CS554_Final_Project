@@ -14,7 +14,7 @@ export function createExerciseEvent({ exerciseId, userId, timestamp, weight, set
       })
       dispatch({
         type: EXERCISE_EVENT_CREATED,
-        data: res.body
+        data: res.data
       })
     } catch (err) {
       if (err.response)
