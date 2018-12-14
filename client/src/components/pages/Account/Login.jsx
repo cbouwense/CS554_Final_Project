@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 export class Login extends React.Component {
   constructor(props) {
@@ -19,11 +20,11 @@ export class Login extends React.Component {
     this.setState({ [name]: value });
   };
 
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const res = await axois.post('/api/user/login', {
+      const res = await axios.post('/api/user/login', {
         username: this.state.username,
         password: this.state.password
       });
