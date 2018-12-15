@@ -8,10 +8,6 @@ import { handleErrors } from '../util';
 
 const saltLength = 11;
 
-interface IMulterFile {
-    location: string;
-}
-
 async function createUser(req: Request, res: Response) {
     const { username, password } = req.body;
 
@@ -106,7 +102,7 @@ async function loginUser(req: Request, res: Response) {
     }
 }
 
-async function updateUser(req: Request & { file: IMulterFile}, res: Response) {
+async function updateUser(req: Request & { file: Express.MulterS3.File}, res: Response) {
     const id = req.params.id;
 
     if (!Types.ObjectId.isValid(id)) {
