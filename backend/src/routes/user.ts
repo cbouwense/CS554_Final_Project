@@ -106,8 +106,7 @@ async function loginUser(req: Request, res: Response) {
     }
 }
 
-async function updateUser(req: Request & { file: MulterFile}, res: Response) {
-    console.log(req.body);
+async function updateUser(req: Request & { file: IMulterFile}, res: Response) {
     const id = req.params.id;
 
     if (!Types.ObjectId.isValid(id)) {
@@ -163,6 +162,6 @@ export default (router: Router) => {
     router.get('/user/:id', handleErrors(getById));
     router.post('/user/login', handleErrors(loginUser));
     router.post('/user', handleErrors(createUser));
-    router.patch('/user/:id', upload.single('profile_image'), handleErrors(updateUser));
+    router.patch('/user/:id', upload.single('profile_image_upload'), handleErrors(updateUser));
     router.delete('/user/:id', handleErrors(deleteUser));
 };
