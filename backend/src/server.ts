@@ -34,7 +34,6 @@ app.use('*', (err, req, res, next) => {
 });
 
 const port = process.env.PORT || 4000;
-console.log(`http://localhost:${port}`);
 app.listen(port, () => {
     console.log(`🚀 http://localhost:${port}`);
 });

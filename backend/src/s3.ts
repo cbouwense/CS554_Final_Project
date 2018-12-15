@@ -22,13 +22,13 @@ export const upload = multer({
             // Store images in different S3 folders based on origin
             let s3Folder = '';
             if (file.fieldname === 'profile_image_upload') {
-                s3Folder = 'profile-pics/';
+                s3Folder = 'profile-pics';
             } else if (file.fieldname === 'gym_image_upload') {
-                s3Folder = 'gym-pics/';
+                s3Folder = 'gym-pics';
             }
 
             const imageExt = file.originalname.split('.').reverse()[0];
-            cb(null, `${s3Folder}${Date.now().toString()}.${imageExt}`);
+            cb(null, `${s3Folder}/${Date.now().toString()}.${imageExt}`);
         },
     }),
 });

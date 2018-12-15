@@ -163,8 +163,6 @@ async function deleteUser(req: Request, res: Response) {
     res.send(await User.findByIdAndDelete(req.params.id));
 }
 
-const imageUploads = upload.single('profile_image');
-
 export default (router: Router) => {
     router.get('/user', handleErrors(getAllUsers));
     router.get('/user/:id', handleErrors(getById));
