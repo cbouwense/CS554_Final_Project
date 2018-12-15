@@ -150,7 +150,7 @@ class Profile extends React.Component {
                       {this.state.gym_picture_upload
                         ? this.state.gym_picture_upload.name
                         : 'no image selected'}
-                        </span>
+                    </span>
                   </label>
                 </div>
               </div>
