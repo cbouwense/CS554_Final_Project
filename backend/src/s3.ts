@@ -18,7 +18,9 @@ export const upload = multer({
             cb(null, { fieldname: file.fieldname });
         },
         key: (req, file, cb) => {
-            cb(null, `${Date.now().toString()}.${file.filename.split('.').reverse()[0]}`);
+            console.log(file);
+            console.log(req.file);
+            cb(null, `${Date.now().toString()}.${file.originalname.split('.').reverse()[0]}`);
         },
     }),
 });
