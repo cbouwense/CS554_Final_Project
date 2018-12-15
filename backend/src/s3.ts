@@ -18,9 +18,17 @@ export const upload = multer({
             cb(null, { fieldname: file.fieldname });
         },
         key: (req, file, cb) => {
-            console.log(file);
-            console.log(req.file);
-            cb(null, `${Date.now().toString()}.${file.originalname.split('.').reverse()[0]}`);
+
+            // Store images in different S3 folders based on origin
+            let s3Folder = '';
+            if (file.fieldname === 'profile_image_upload') {
+                s3Folder = 'profile-pics';
+            } else if (file.fieldname === 'gym_image_upload') {
+                s3Folder = 'gym-pics';
+            }
+
+            const imageExt = file.originalname.split('.').reverse()[0];
+            cb(null, `${s3Folder}/${Date.now().toString()}.${imageExt}`);
         },
     }),
 });
