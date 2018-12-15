@@ -102,7 +102,7 @@ async function loginUser(req: Request, res: Response) {
     }
 }
 
-async function updateUser(req: Request, res: Response) {
+async function updateUser(req: Request & { file: Express.MulterS3.File }, res: Response) {
     const id = req.params.id;
 
     if (!Types.ObjectId.isValid(id)) {
@@ -133,7 +133,7 @@ async function updateUser(req: Request, res: Response) {
     const toUpdate = {
         username: req.body.username || user.username,
         password: req.body.password || user.password,
-        profile_image: req.body.profile_image || user.profile_image,
+        profile_image: req.file.location || user.profile_image,
         bio: req.body.bio || user.bio,
         images: user.images,
     };
@@ -175,10 +175,10 @@ const imageUploads = upload.single('profile_image');
 //                                    { name: 'images', maxCount: 1 }]);
 
 export default (router: Router) => {
-    router.get('/user', imageUploads, handleErrors(getAllUsers));
-    router.get('/user/:id', imageUploads, handleErrors(getById));
-    router.post('/user/login', imageUploads, handleErrors(loginUser));
-    router.post('/user', imageUploads, handleErrors(createUser));
-    router.patch('/user/:id', imageUploads, handleErrors(updateUser));
-    router.delete('/user/:id', imageUploads, handleErrors(deleteUser));
+    router.get('/user', handleErrors(getAllUsers));
+    router.get('/user/:id', handleErrors(getById));
+    router.post('/user/login', handleErrors(loginUser));
+    router.post('/user', handleErrors(createUser));
+    router.patch('/user/:id', upload.single('profile_image_upload'), handleErrors(updateUser));
+    router.delete('/user/:id', handleErrors(deleteUser));
 };

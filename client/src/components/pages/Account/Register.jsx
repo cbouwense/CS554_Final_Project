@@ -48,41 +48,61 @@ class Register extends React.Component {
         return <>
           {this.state.error &&
           <p className="notification is-danger">{this.state.error}</p>}
-          <form onSubmit={this.handleSubmit}>
-              <label>
-                  Username:
-                  <input
-                    type="text"
-                    name="username"
-                    value={username}
-                    onChange={this.handleChange}
-                    required
-                  />
-              </label>
+          <div className="container">
+            <form onSubmit={this.handleSubmit}>
+              <div className="field">
+                <label className="label">
+                    Username:
+                    <div className="control">
+                      <input
+                        className="input"
+                        type="text"
+                        name="username"
+                        value={username}
+                        onChange={this.handleChange}
+                        required
+                      />
+                    </div>
+                </label>
+              </div>
 
-              <label>
-                  Password:
-                  <input
-                    type="password"
-                    name="password"
-                    value={password}
-                    onChange={this.handleChange}
-                    required
-                  />
-              </label>
+              <div className="field">
+                <label className="label">
+                    Password:
+                    <div className="control">
+                      <input
+                        className="input"
+                        type="password"
+                        name="password"
+                        value={password}
+                        onChange={this.handleChange}
+                        required
+                      />
+                    </div>
+                </label>
+              </div>
 
-              <label>
-                  Confirm Password:
-                  <input
-                    type="password"
-                    name="confirmedPassword"
-                    value={confirmedPassword}
-                    onChange={this.handleChange}
-                    required
-                  />
-              </label>
-              <input type="submit" value="Register" />
-          </form>
+              <div className="field">
+                <label className="label">
+                    Confirm Password:
+                    <div className="control">
+                      <input
+                        className="input"
+                        type="password"
+                        name="confirmedPassword"
+                        value={confirmedPassword}
+                        onChange={this.handleChange}
+                        required
+                      />
+                    </div>
+                </label>
+              </div>
+
+              <div className="field">
+                <input className="button" type="submit" value="Register" />
+              </div>
+            </form>
+          </div>
         </>
     }
 }

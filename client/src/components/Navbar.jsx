@@ -16,6 +16,7 @@ class Navbar extends React.Component {
 
   render() {
     const { user } = this.props;
+    const loggedIn = user._id != null;
 
     return (
       <nav className="navbar is-primary">
@@ -26,11 +27,10 @@ class Navbar extends React.Component {
           <NavLink className="navbar-item" to="/exerciseInfo">
             Exercise Examples
           </NavLink>
-          {user && (
-            <NavLink className="navbar-item" to="/exerciseEvents/new">
-              Log Exercise
-            </NavLink>
-          )}
+          {loggedIn &&
+           <NavLink className="navbar-item" to="/exerciseEvents/new">
+             Log Exercise
+           </NavLink>}
 
           <a
             role="button"
@@ -51,7 +51,7 @@ class Navbar extends React.Component {
             {user._id
             ? <>
                 <a className="navbar-item" onClick={this.logout}>Logout {user.username}</a>
-                <p className="navbar-item"><img src={user.profile_image} alt="profile" /></p>
+              <NavLink className="navbar-item" to="/account/profile"><img src={user.profile_image} alt="profile" /></NavLink>
               </>
             : <>
                 <NavLink to="/account/login" className="navbar-item">Login</NavLink>
