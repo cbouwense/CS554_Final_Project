@@ -102,7 +102,7 @@ async function loginUser(req: Request, res: Response) {
     }
 }
 
-async function updateUser(req: Request & { file: Express.MulterS3.File}, res: Response) {
+async function updateUser(req: Request & { file: Express.MulterS3.File }, res: Response) {
     const id = req.params.id;
 
     if (!Types.ObjectId.isValid(id)) {

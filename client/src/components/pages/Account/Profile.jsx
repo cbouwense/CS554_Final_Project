@@ -2,32 +2,27 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { updateUser } from '../../../actions';
 
-class Profile extends React.Component {
-  initialState = {
-    username: '',
-    bio: '',
-    profile_picture_upload: null,
-    upload_name: '',
-    error: null
-  };
+const initialState = {
+  username: '',
+  bio: '',
+  profile_picture_upload: null,
+  upload_name: '',
+  error: null
+};
 
-  state = {
-    username: '',
-    bio: '',
-    profile_picture_upload: null,
-    upload_name: '',
-    error: null
-  };
+class Profile extends React.Component {
+
+  state = initialState
 
   handleFileUpload = (event) => {
-    let image = event.currentTarget.files[0];
+    const image = event.currentTarget.files[0];
     this.setState({ profile_picture_upload: image, upload_name: image.name })
   }
 
   handleChange = (event) => {
     event.preventDefault();
 
-    let { name, value } = event.currentTarget;
+    const { name, value } = event.currentTarget;
 
     this.setState({ [name]: value });
   }
@@ -36,37 +31,33 @@ class Profile extends React.Component {
     event.preventDefault();
 
     const { user } = this.props;
-    let { username, bio, profile_picture_upload, upload_name } = this.state;
+    const { username, bio, profile_picture_upload, upload_name } = this.state;
 
-    let form_data = new FormData();
-    form_data.set("username", username);
-    form_data.append("profile_image_upload", profile_picture_upload, upload_name);
-    form_data.set("bio", bio);
+    const formData = new FormData();
+    formData.set("username", username);
+    formData.append("profile_image_upload", profile_picture_upload, upload_name);
+    formData.set("bio", bio);
 
     try {
-      await this.props.updateUser(user._id, form_data);
+      await this.props.updateUser(user._id, formData);
+      this.setState(initialState);
     } catch (err) {
       this.setState({
         username: user.username,
         bio: user.bio,
         error: err.message
-      })
+      });
     }
-    state = initialState;
   }
 
   render() {
     const { user } = this.props;
-    let update = this.state;
 
     return <>
-      {
-        this.state.error && (
-          <p className="notification is-danger">{this.state.error}</p>
-        )
-      }
-      < div className = "container" >
+      {this.state.error &&
+       <p className="notification is-danger">{this.state.error}</p>}
 
+      <div className = "container">
         <div className="columns">
           <div className="column">
             <p>username: {user.username}</p>
@@ -87,7 +78,7 @@ class Profile extends React.Component {
                     className="input"
                     onChange={this.handleChange}
                     placeholder={user.username}
-                    value={update.username} />
+                    value={this.state.username} />
                 </div>
               </div>
 
@@ -100,7 +91,7 @@ class Profile extends React.Component {
                     className="textarea"
                     onChange={this.handleChange}
                     placeholder={user.bio}
-                    value={update.bio} />
+                    value={this.state.bio} />
                 </div>
               </div>
 
@@ -114,17 +105,13 @@ class Profile extends React.Component {
                       onChange={this.handleFileUpload} />
                     <span className="file-cta">
                       <span aria-label="Camera" roll="img" className="file-icon">📷</span>
-                      <span className="file-label">
-                        Choose a file…
-                          </span>
+                      <span className="file-label">Choose a file…</span>
                     </span>
                     <span className="file-name">
                       {this.state.profile_picture_upload
-                        ? this.state.upload_name
-                        : <>
-                        'no image uploaded'
-                            </>}
-                        </span>
+                       ? this.state.upload_name
+                       : 'no image uploaded'}
+                    </span>
                   </label>
                 </div>
               </div>
@@ -137,9 +124,8 @@ class Profile extends React.Component {
             </form>
           </div>
         </div>
-
-          </div >
-        </>;
+      </div>
+    </>;
   }
 }
 
