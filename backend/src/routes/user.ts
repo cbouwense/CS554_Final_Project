@@ -3,6 +3,7 @@ import { Request, Response, Router } from 'express';
 import { Types } from 'mongoose';
 import { ExerciseEvent } from '../models/exercise-event';
 import { IUser, User } from '../models/user';
+import { upload } from '../s3';
 import { handleErrors } from '../util';
 
 const saltLength = 11;
@@ -101,7 +102,7 @@ async function loginUser(req: Request, res: Response) {
     }
 }
 
-async function updateUser(req: Request, res: Response) {
+async function updateUser(req: Request & { file: Express.MulterS3.File}, res: Response) {
     const id = req.params.id;
 
     if (!Types.ObjectId.isValid(id)) {
@@ -118,7 +119,7 @@ async function updateUser(req: Request, res: Response) {
     const toUpdate = {
         username: req.body.username || user.username,
         password: req.body.password || user.password,
-        profile_image: req.body.profile_image || user.profile_image,
+        profile_image: req.file.location || user.profile_image,
         bio: req.body.bio || user.bio,
         images: user.images,
     };
@@ -157,6 +158,6 @@ export default (router: Router) => {
     router.get('/user/:id', handleErrors(getById));
     router.post('/user/login', handleErrors(loginUser));
     router.post('/user', handleErrors(createUser));
-    router.patch('/user/:id', handleErrors(updateUser));
+    router.patch('/user/:id', upload.single('profile_image_upload'), handleErrors(updateUser));
     router.delete('/user/:id', handleErrors(deleteUser));
 };

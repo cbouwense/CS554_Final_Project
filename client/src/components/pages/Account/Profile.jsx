@@ -3,25 +3,31 @@ import { connect } from 'react-redux';
 import { updateUser } from '../../../actions';
 
 class Profile extends React.Component {
+  initialState = {
+    username: '',
+    bio: '',
+    profile_picture_upload: null,
+    upload_name: '',
+    error: null
+  };
 
   state = {
-    username: this.props.user.username,
-    profile_image: this.props.user.profile_image,
-    bio: this.props.user.bio,
-    image_upload: null,
-    image_name: '',    
+    username: '',
+    bio: '',
+    profile_picture_upload: null,
+    upload_name: '',
     error: null
   };
 
   handleFileUpload = (event) => {
-    const image = event.currentTarget.files[0];
-    this.setState({ image_upload: image, image_name: image.name })
+    let image = event.currentTarget.files[0];
+    this.setState({ profile_picture_upload: image, upload_name: image.name })
   }
 
   handleChange = (event) => {
     event.preventDefault();
 
-    const { name, value } = event.currentTarget;
+    let { name, value } = event.currentTarget;
 
     this.setState({ [name]: value });
   }
@@ -30,44 +36,50 @@ class Profile extends React.Component {
     event.preventDefault();
 
     const { user } = this.props;
+    let { username, bio, profile_picture_upload, upload_name } = this.state;
 
-    if (this.state.image_upload)
-      this.setState({ profile_image: this.state.image_upload });
+    let form_data = new FormData();
+    form_data.set("username", username);
+    form_data.append("profile_image_upload", profile_picture_upload, upload_name);
+    form_data.set("bio", bio);
+
     try {
-      await this.props.updateUser(user._id, {
-        username: this.state.username,
-        profile_image: this.state.profile_image,
-        bio: this.state.bio
-      });
+      await this.props.updateUser(user._id, form_data);
     } catch (err) {
       this.setState({
         username: user.username,
-        profile_image: user.profile_image,
         bio: user.bio,
         error: err.message
       })
     }
+    state = initialState;
   }
 
   render() {
     const { user } = this.props;
-    const update = this.state;
+    let update = this.state;
 
-    return (
-      <div className="container">
+    return <>
+      {
+        this.state.error && (
+          <p className="notification is-danger">{this.state.error}</p>
+        )
+      }
+      < div className = "container" >
 
         <div className="columns">
           <div className="column">
             <p>username: {user.username}</p>
             <p>bio: {user.bio}</p>
+            <img src={user.profile_image}></img>
           </div>
 
           <div className="column">
-            <form action="">
+            <form onSubmit={this.handleSubmit} encType="multipart/form-data">
               <h1>Update profile</h1>
 
               <div className="field">
-                <label htmlFor="" className="label">username</label>
+                <label className="label">username</label>
                 <div className="control">
                   <input
                     type="text"
@@ -80,7 +92,7 @@ class Profile extends React.Component {
               </div>
 
               <div className="field">
-                <label htmlFor="" className="label">bio</label>
+                <label className="label">bio</label>
                 <div className="control">
                   <textarea
                     type="text"
@@ -93,47 +105,45 @@ class Profile extends React.Component {
               </div>
 
               <div className="field">
-                <div class="file has-name">
-                  <label class="file-label">
-                    <input 
-                      className="file-input" 
-                      type="file" 
+                <div className="file has-name is-fullwidth">
+                  <label className="file-label">
+                    <input
+                      className="file-input"
+                      type="file"
                       name="profile_image"
                       onChange={this.handleFileUpload} />
-                      <span class="file-cta">
-                        <span class="file-icon">
-                          📷
-                        </span>
-                        <span class="file-label">
-                          Choose a file…
-                        </span>
-                      </span>
-                      <span className="file-name">
-                        {this.state.image_upload
-                        ? this.state.image_name
+                    <span className="file-cta">
+                      <span aria-label="Camera" roll="img" className="file-icon">📷</span>
+                      <span className="file-label">
+                        Choose a file…
+                          </span>
+                    </span>
+                    <span className="file-name">
+                      {this.state.profile_picture_upload
+                        ? this.state.upload_name
                         : <>
-                            no image uploaded
-                          </>}
-                      </span>
+                        'no image uploaded'
+                            </>}
+                        </span>
                   </label>
-                </div>  
+                </div>
               </div>
 
-                <div className="field">
-                  <div className="control">
-                    <button className="button" type="submit" value="submit">Update</button>
-                  </div>
+              <div className="field">
+                <div className="control">
+                  <button className="button" type="submit" value="submit">Update</button>
                 </div>
+              </div>
             </form>
           </div>
-          </div>
-
         </div>
-        );
+
+          </div >
+        </>;
   }
 }
 
 export default connect(
-  state => ({user: state.auth.user }),
-  {updateUser}
-        )(Profile);
+  state => ({ user: state.auth.user }),
+  { updateUser }
+)(Profile);

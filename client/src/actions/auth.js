@@ -44,7 +44,7 @@ export function registerUser(username, password) {
 export function updateUser(userId, data) {
   return async dispatch => {
     try {
-      const res = await axios.patch(`http://localhost:4000/api/user/${userId}`, {data})
+      const res = await axios.patch(`http://localhost:4000/api/user/${userId}`, data);
       return dispatch({
         type: USER_LOGIN_SUCCESS,
         data: res.data

@@ -17,7 +17,7 @@ export default function exerciseEventsReducer(state = initialState.exerciseEvent
     case EXERCISE_EVENT_DELETED:
       return state.filter(exerciseEvent => exerciseEvent._id !== action.data._id);
     case USER_LOGIN_SUCCESS:
-      return action.data.exerciseEvents;
+      return action.data.exerciseEvents || state
     default:
       return state;
   }
