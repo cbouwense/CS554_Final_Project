@@ -2,16 +2,21 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createExerciseEvent } from '../../actions';
+import moment from 'moment';
 
 class ExerciseEventForm extends React.Component {
-  state = {
-    exerciseId: '',
-    timestamp: '',
-    weight: '',
-    sets: '',
-    reps: '',
-    error: null
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      exerciseId: '',
+      timestamp: moment().format('YYYY-MM-DDTHH:mm'),
+      weight: '',
+      sets: '',
+      reps: '',
+      error: null
+    };
+  }
 
   handleChange = event => {
     event.preventDefault();

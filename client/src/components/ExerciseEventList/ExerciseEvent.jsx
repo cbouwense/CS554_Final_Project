@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { deleteExerciseEvent } from '../../actions';
+import moment from 'moment';
 
 const ExerciseEvent = ({
   exercise: { _id, exercise, timestamp, weight, sets, reps },
@@ -24,7 +25,7 @@ const ExerciseEvent = ({
           {sets && <p>{sets} sets</p>}
           {reps && <p>{reps} reps</p>}
           <br />
-          <time dateTime={timestamp}>{timestamp}</time>
+          <time dateTime={timestamp}>{moment(timestamp).fromNow()}</time>
         </div>
 
         <button onClick={() => deleteExerciseEvent({ _id })}>Delete</button>
