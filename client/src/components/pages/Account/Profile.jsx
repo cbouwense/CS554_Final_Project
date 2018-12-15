@@ -6,9 +6,7 @@ const initialState = {
   username: '',
   bio: '',
   profile_picture_upload: null,
-  upload_name: '',
   gym_picture_upload: null,
-  gym_upload_name: '',
   error: null
 };
 
@@ -19,10 +17,9 @@ class Profile extends React.Component {
   handleFileUpload = (event) => {
     const image = event.currentTarget.files[0];
     if (event.currentTarget.name === 'gym_image') {
-      this.setState({ gym_picture_upload: image, gym_upload_name: image.name });
-    }
-    else if (event.currentTarget.name === 'profile_image') {
-      this.setState({ profile_picture_upload: image, upload_name: image.name });
+      this.setState({ gym_picture_upload: image });
+    } else if (event.currentTarget.name === 'profile_image') {
+      this.setState({ profile_picture_upload: image });
     }
   }
 
@@ -42,15 +39,15 @@ class Profile extends React.Component {
       username,
       bio,
       profile_picture_upload,
-      upload_name,
       gym_picture_upload,
-      gym_upload_name
     } = this.state;
 
     const formData = new FormData();
     formData.set("username", username);
-    formData.append("profile_image_upload", profile_picture_upload, upload_name);
-    formData.append("gym_image_upload", gym_picture_upload, gym_upload_name);
+    if (profile_picture_upload)
+      formData.append("profile_image_upload", profile_picture_upload);
+    if (gym_picture_upload)
+      formData.append("gym_image_upload", gym_picture_upload);
     formData.set("bio", bio);
 
     try {
@@ -125,8 +122,8 @@ class Profile extends React.Component {
                     </span>
                     <span className="file-name">
                       {this.state.profile_picture_upload
-                       ? this.state.upload_name
-                       : 'no image uploaded'}
+                       ? this.state.profile_picture_upload.name
+                       : 'no image selected'}
                     </span>
                   </label>
                 </div>
@@ -151,10 +148,8 @@ class Profile extends React.Component {
                     </span>
                     <span className="file-name">
                       {this.state.gym_picture_upload
-                        ? this.state.gym_upload_name
-                        : <>
-                        'no image uploaded'
-                            </>}
+                        ? this.state.gym_picture_upload.name
+                        : 'no image selected'}
                         </span>
                   </label>
                 </div>
