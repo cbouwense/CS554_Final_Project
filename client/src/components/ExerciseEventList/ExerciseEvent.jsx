@@ -1,15 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { deleteExerciseEvent } from '../../actions';
 
 const ExerciseEvent = ({
-  exercise: { exercise, timestamp, weight, sets, reps }
+  exercise: { _id, exercise, timestamp, weight, sets, reps },
+  deleteExerciseEvent,
+  toggleEdit
 }) => {
   return (
     <div className="card">
       <div className="card-content">
         <div className="media">
-          <div className="media-content">
-            {/* ? I do not know how to actually make this go to the #anchor */}
+          <div className="mesdia-content">
             <Link to={`/exerciseInfo#${exercise.name.replace(/\s/g, '')}`}>
               <p className="title is-4">{exercise.name}</p>
             </Link>
@@ -23,9 +26,15 @@ const ExerciseEvent = ({
           <br />
           <time dateTime={timestamp}>{timestamp}</time>
         </div>
+
+        <button onClick={() => deleteExerciseEvent({ _id })}>Delete</button>
+        <button onClick={toggleEdit}>Edit</button>
       </div>
     </div>
   );
 };
 
-export default ExerciseEvent;
+export default connect(
+  null,
+  { deleteExerciseEvent }
+)(ExerciseEvent);
