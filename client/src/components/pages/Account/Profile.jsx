@@ -7,6 +7,8 @@ const initialState = {
   bio: '',
   profile_picture_upload: null,
   upload_name: '',
+  gym_picture_upload: null,
+  gym_upload_name: '',
   error: null
 };
 
@@ -16,7 +18,12 @@ class Profile extends React.Component {
 
   handleFileUpload = (event) => {
     const image = event.currentTarget.files[0];
-    this.setState({ profile_picture_upload: image, upload_name: image.name })
+    if (event.currentTarget.name === 'gym_image') {
+      this.setState({ gym_picture_upload: image, gym_upload_name: image.name });
+    }
+    else if (event.currentTarget.name === 'profile_image') {
+      this.setState({ profile_picture_upload: image, upload_name: image.name });
+    }
   }
 
   handleChange = (event) => {
@@ -31,11 +38,19 @@ class Profile extends React.Component {
     event.preventDefault();
 
     const { user } = this.props;
-    const { username, bio, profile_picture_upload, upload_name } = this.state;
+    const {
+      username,
+      bio,
+      profile_picture_upload,
+      upload_name,
+      gym_picture_upload,
+      gym_upload_name
+    } = this.state;
 
     const formData = new FormData();
     formData.set("username", username);
     formData.append("profile_image_upload", profile_picture_upload, upload_name);
+    formData.append("gym_image_upload", gym_picture_upload, gym_upload_name);
     formData.set("bio", bio);
 
     try {
@@ -96,6 +111,7 @@ class Profile extends React.Component {
               </div>
 
               <div className="field">
+                <label className="label">Profile Picture</label>
                 <div className="file has-name is-fullwidth">
                   <label className="file-label">
                     <input
@@ -112,6 +128,34 @@ class Profile extends React.Component {
                        ? this.state.upload_name
                        : 'no image uploaded'}
                     </span>
+                  </label>
+                </div>
+              </div>
+
+              {/* For testing story picture uploads */}
+
+              <div className="field">
+                <label className="label">Gym Picture</label>
+                <div className="file has-name is-fullwidth">
+                  <label className="file-label">
+                    <input
+                      className="file-input"
+                      type="file"
+                      name="gym_image"
+                      onChange={this.handleFileUpload} />
+                    <span className="file-cta">
+                      <span aria-label="Camera" roll="img" className="file-icon">📷</span>
+                      <span className="file-label">
+                        Choose a file…
+                      </span>
+                    </span>
+                    <span className="file-name">
+                      {this.state.gym_picture_upload
+                        ? this.state.gym_upload_name
+                        : <>
+                        'no image uploaded'
+                            </>}
+                        </span>
                   </label>
                 </div>
               </div>

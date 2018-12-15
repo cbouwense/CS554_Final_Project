@@ -102,7 +102,7 @@ async function loginUser(req: Request, res: Response) {
     }
 }
 
-async function updateUser(req: Request & { file: Express.MulterS3.File }, res: Response) {
+async function updateUser(req: Request, res: Response) {
     const id = req.params.id;
 
     if (!Types.ObjectId.isValid(id)) {
@@ -116,10 +116,15 @@ async function updateUser(req: Request & { file: Express.MulterS3.File }, res: R
         res.status(404).send({ message: `User with id ${id} not found` });
     }
 
+    if ((req.files as any).gym_image_upload) {
+        user.images.unshift((req.files as any).gym_image_upload[0].location);
+    }
+
     const toUpdate = {
         username: req.body.username || user.username,
         password: req.body.password || user.password,
-        profile_image: req.file.location || user.profile_image,
+        profile_image: (req.files as any).profile_image_upload[0].location ||
+                       user.profile_image,
         bio: req.body.bio || user.bio,
         images: user.images,
     };
@@ -153,18 +158,15 @@ async function deleteUser(req: Request, res: Response) {
     res.send(await User.findByIdAndDelete(req.params.id));
 }
 
-// TODO max count for images might be more than 1 in the future
-
 const imageUploads = upload.single('profile_image');
-
-// const imageUploads = upload.fields([{ name: 'profile_image', maxCount: 1 },
-//                                    { name: 'images', maxCount: 1 }]);
 
 export default (router: Router) => {
     router.get('/user', handleErrors(getAllUsers));
     router.get('/user/:id', handleErrors(getById));
     router.post('/user/login', handleErrors(loginUser));
     router.post('/user', handleErrors(createUser));
-    router.patch('/user/:id', upload.single('profile_image_upload'), handleErrors(updateUser));
+    router.patch('/user/:id',
+                 upload.fields([{ name: 'profile_image_upload' }, { name: 'gym_image_upload' }]),
+                 handleErrors(updateUser));
     router.delete('/user/:id', handleErrors(deleteUser));
 };
