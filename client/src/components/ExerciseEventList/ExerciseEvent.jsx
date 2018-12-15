@@ -12,7 +12,7 @@ const ExerciseEvent = ({
     <div className="card">
       <div className="card-content">
         <div className="media">
-          <div className="mesdia-content">
+          <div className="media-content">
             <Link to={`/exerciseInfo#${exercise.name.replace(/\s/g, '')}`}>
               <p className="title is-4">{exercise.name}</p>
             </Link>
