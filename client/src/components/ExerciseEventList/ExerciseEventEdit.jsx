@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { updateExerciseEvent } from '../../actions';
+import moment from 'moment';
 
 class ExerciseEventEdit extends React.Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class ExerciseEventEdit extends React.Component {
 
     this.state = {
       exerciseId: exercise._id,
-      timestamp,
+      timestamp: moment(timestamp).format('YYYY-MM-DDTHH:mm'),
       weight,
       sets,
       reps,

@@ -11,7 +11,7 @@ async function main() {
         await Exercise.deleteMany({});
 
         const e1 = new Exercise({
-            name: 'Standng Dumbell Upright Row',
+            name: 'Standing Dumbell Upright Row',
             description: 'Grasp a dumbbell in each hand with a pronated (palms forward) grip that is slightly less than shoulder width. The dumbbells should be resting on top of your thighs. Your arms should be extended with a slight bend at the elbows and your back should be straight. This will be your starting position.',
             images: ['http://thisisaurl.com', 'http://thisisanother.gov'],
             bodyparts_worked: ['traps'],
