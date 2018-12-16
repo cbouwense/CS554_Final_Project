@@ -4,6 +4,7 @@ dotenv.config();
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as express from 'express';
+import * as session from 'express-session';
 import * as mongoose from 'mongoose';
 import morgan = require('morgan');
 import { constructRoutes } from './routes';
@@ -15,8 +16,18 @@ mongoose.connect('mongodb://localhost/mothballs', { useNewUrlParser: true })
     .catch(err => console.log(`[mongoose]: ${err}`));
 
 app.use(morgan('dev'));
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+}));
 app.use(bodyParser.json());
+app.use(session({
+    secret: 'chungus amungus',
+    name: 'chungus',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false },
+}));
 
 app.use(express.static('public'));
 

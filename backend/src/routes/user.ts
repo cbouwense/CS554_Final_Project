@@ -88,6 +88,8 @@ async function loginUser(req: Request, res: Response) {
         }
 
         const exerciseEvents = await ExerciseEvent.find({ userId: result._id });
+        req.session.userId = result._id;
+        console.log(req.session);
 
         res.send({
             _id: result._id,
@@ -153,11 +155,44 @@ async function deleteUser(req: Request, res: Response) {
     res.send(await User.findByIdAndDelete(req.params.id));
 }
 
+async function loadUserData(req: Request, res: Response) {
+    const { userId } = req.session;
+    console.log(req.session);
+
+    if (userId == null) {
+        res.json(null);
+        return;
+    }
+
+    try {
+        const user = await User.findById(userId);
+        const exerciseEvents = await ExerciseEvent.find({ userId });
+
+        res.json({
+            user,
+            exerciseEvents,
+        });
+    } catch (err) {
+        console.error(err);
+        delete req.session.userId;
+        res.status(400).json({
+            message: err.message,
+        });
+    }
+}
+
+function logout(req: Request, res: Response) {
+    delete req.session.userId;
+    res.sendStatus(200);
+}
+
 export default (router: Router) => {
     router.get('/user', handleErrors(getAllUsers));
+    router.get('/user/data', handleErrors(loadUserData));
     router.get('/user/:id', handleErrors(getById));
     router.post('/user/login', handleErrors(loginUser));
     router.post('/user', handleErrors(createUser));
     router.patch('/user/:id', upload.single('profile_image_upload'), handleErrors(updateUser));
     router.delete('/user/:id', handleErrors(deleteUser));
+    router.post('/logout', logout);
 };
