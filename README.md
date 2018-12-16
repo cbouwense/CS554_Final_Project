@@ -5,6 +5,7 @@
 A client/server for logging exercise.
 
 To run the server backend:
+
 ```shell
 mongod --dbpath /path/to/db &
 cd backend
@@ -15,6 +16,7 @@ npm run dev
 ```
 
 To run the client frontend
+
 ```shell
 cd client
 npm install
