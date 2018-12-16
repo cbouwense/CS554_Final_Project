@@ -4,7 +4,7 @@ import { GOT_EXERCISES } from './actionTypes';
 export function getExercises() {
   return async dispatch => {
     try {
-      const res = await axios.get('http://localhost:4000/api/exercise')
+      const res = await axios.get('http://localhost:4000/api/exercise');
       dispatch({
         type: GOT_EXERCISES,
         data: res.data

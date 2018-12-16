@@ -3,14 +3,6 @@ import { connect } from 'react-redux';
 import { updateUser } from '../../../actions';
 
 class Profile extends React.Component {
-  initialState = {
-    username: '',
-    bio: '',
-    profile_picture_upload: null,
-    upload_name: '',
-    error: null
-  };
-
   state = {
     username: '',
     bio: '',
@@ -45,6 +37,7 @@ class Profile extends React.Component {
 
     try {
       await this.props.updateUser(user._id, form_data);
+      this.state.setState(this.initialState);
     } catch (err) {
       this.setState({
         username: user.username,
@@ -52,7 +45,7 @@ class Profile extends React.Component {
         error: err.message
       })
     }
-    state = initialState;
+    
   }
 
   render() {

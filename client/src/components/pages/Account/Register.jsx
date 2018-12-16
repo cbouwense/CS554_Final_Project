@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { registerUser } from '../../../actions';
+import { checkSession } from '../../../actions/auth';
 
 class Register extends React.Component {
     constructor(props) {
@@ -109,5 +110,5 @@ class Register extends React.Component {
 
 export default connect(
   state => ({ error: state.auth.error }),
-  { registerUser }
+  { registerUser, checkSession }
 )(Register);

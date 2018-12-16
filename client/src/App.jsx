@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { Navbar } from './components';
 import { connect } from 'react-redux';
-import { getExercises } from './actions';
+import { checkSession, getExercises } from './actions';
 import { withRouter } from 'react-router';
 import 'bulma/css/bulma.css';
 
 class App extends React.Component {
   componentDidMount() {
     this.props.getExercises()
+    this.props.checkSession()
   }
 
   render() {
@@ -25,6 +26,6 @@ class App extends React.Component {
 export default withRouter(
   connect(
     null,
-    { getExercises }
+    { checkSession, getExercises }
   )(App)
 );

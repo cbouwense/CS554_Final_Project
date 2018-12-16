@@ -32,6 +32,7 @@ class Navbar extends React.Component {
             </NavLink>
           )}
 
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <a
             role="button"
             className={`navbar-burger burger ${this.state.burgerOpen &&
@@ -50,6 +51,7 @@ class Navbar extends React.Component {
           <div className="navbar-end">
             {user._id
             ? <>
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <a className="navbar-item" onClick={this.logout}>Logout {user.username}</a>
               <NavLink className="navbar-item" to="/account/profile"><img src={user.profile_image} alt="profile" /></NavLink>
               </>
