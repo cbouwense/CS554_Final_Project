@@ -1,6 +1,6 @@
 // tslint:disable: max-line-length
 import * as mongoose from 'mongoose';
-import { Exercise } from './src/models/exercise';
+import { Exercise } from './models/exercise';
 
 mongoose.connect('mongodb://localhost/mothballs', { useNewUrlParser: true })
     .then(() => console.log('[seed.js] [mongoose]: connection successful'))
