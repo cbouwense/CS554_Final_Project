@@ -44,33 +44,44 @@ class Login extends React.Component {
           <p className="notification is-danger">{this.state.error}</p>
         )}
 
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Username:
-            <input
-              type="text"
-              name="username"
-              value={username}
-              onChange={this.handleChange}
-            />
-          </label>
+        <div className="container">
+          <form onSubmit={this.handleSubmit}>
 
-          <label>
-            Password:
-            <input
-              type="password"
-              name="password"
-              value={password}
-              onChange={this.handleChange}
-            />
-          </label>
+            <div className="field">
+              <label className="label">
+                Username:
+                  <div className="control">
+                  <input
+                    className="input"
+                    type="text"
+                    name="username"
+                    value={username}
+                    onChange={this.handleChange}
+                  />
+                </div>
+              </label>
+            </div>
 
-          <label>
-            <button type="submit" value="submit">
-              Submit
-            </button>
-          </label>
-        </form>
+            <div className="field">
+              <label className="label">
+                Password:
+                <div className="control">
+                  <input
+                    className="input"
+                    type="password"
+                    name="password"
+                    value={password}
+                    onChange={this.handleChange}
+                  />
+                </div>
+              </label>
+            </div>
+
+            <div className="field">
+              <input type="submit" value="Login" className="button" />
+            </div>
+          </form>
+        </div>
       </>
     );
   }
