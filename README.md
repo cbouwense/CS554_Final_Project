@@ -2,9 +2,15 @@
 ## Team: The Mothballs
 ## Members: Christian Bouwense, Ben Iofel, Matt Rota, Taber McFarlin, Keyur Ved
 
-A client/server for logging exercise.
+An app for logging exercise.
 
-To run the server backend:
+## Running the server
+
+Install graphicsmagick:
+
+MacOS: `brew install graphicsmagick`
+
+Ubuntu: `sudo apt install graphicsmagick`
 
 ```shell
 $ mongod --dbpath /path/to/db &
@@ -15,7 +21,7 @@ $ npm run worker
 $ npm run dev
 ```
 
-To run the client frontend
+### Running the client
 
 ```shell
 $ cd client

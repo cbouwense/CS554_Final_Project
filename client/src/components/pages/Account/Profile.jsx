@@ -129,8 +129,6 @@ class Profile extends React.Component {
                 </div>
               </div>
 
-              {/* For testing story picture uploads */}
-
               <div className="field">
                 <label className="label">Gym Picture</label>
                 <div className="file has-name is-fullwidth">
@@ -162,6 +160,18 @@ class Profile extends React.Component {
               </div>
             </form>
           </div>
+        </div>
+
+        <div className="columns is-multiline">
+                        
+          {this.props.user.images &&
+           this.props.user.images.map(url => 
+                                      <div className="column is-one-third">
+                                        <img src={`${url}`}></img>
+                                      </div>
+                                      ) 
+          }
+
         </div>
       </div>
     </>;
