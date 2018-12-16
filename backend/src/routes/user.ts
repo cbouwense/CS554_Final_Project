@@ -1,6 +1,7 @@
 import { compare, hash } from 'bcryptjs';
 import { Request, Response, Router } from 'express';
 import { Types } from 'mongoose';
+import { mqpublish } from '../amqp';
 import { ExerciseEvent } from '../models/exercise-event';
 import { IUser, User } from '../models/user';
 import { upload } from '../s3';
@@ -89,7 +90,6 @@ async function loginUser(req: Request, res: Response) {
 
         const exerciseEvents = await ExerciseEvent.find({ userId: result._id });
         req.session.userId = result._id;
-        console.log(req.session);
 
         res.send({
             _id: result._id,
@@ -126,6 +126,8 @@ async function updateUser(req: Request, res: Response) {
 
     if ((req.files as any).profile_image_upload) {
         profile = (req.files as any).profile_image_upload[0].location;
+
+        mqpublish({ url: profile, userId: id });
     }
 
     const toUpdate = {
@@ -167,7 +169,6 @@ async function deleteUser(req: Request, res: Response) {
 
 async function loadUserData(req: Request, res: Response) {
     const { userId } = req.session;
-    console.log(req.session);
 
     if (userId == null) {
         res.json(null);

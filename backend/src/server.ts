@@ -5,15 +5,22 @@ import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as express from 'express';
 import * as session from 'express-session';
+import { createServer } from 'http';
 import * as mongoose from 'mongoose';
 import morgan = require('morgan');
+import * as socketIo from 'socket.io';
+import * as amqp from './amqp';
 import { constructRoutes } from './routes';
 
 const app = express();
+const server = createServer(app);
+const io = socketIo(server);
 
 mongoose.connect('mongodb://localhost/mothballs', { useNewUrlParser: true })
     .then(() => console.log('[mongoose]: connection successful'))
     .catch(err => console.log(`[mongoose]: ${err}`));
+
+amqp.listen(io);
 
 app.use(morgan('dev'));
 app.use(cors({
@@ -45,6 +52,6 @@ app.use('*', (err, req, res, next) => {
 });
 
 const port = process.env.PORT || 4000;
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`🚀 http://localhost:${port}`);
 });
