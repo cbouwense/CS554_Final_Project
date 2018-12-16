@@ -7,6 +7,7 @@ import * as express from 'express';
 import * as session from 'express-session';
 import * as mongoose from 'mongoose';
 import morgan = require('morgan');
+import * as amqp from './amqp';
 import { constructRoutes } from './routes';
 
 const app = express();
@@ -14,6 +15,8 @@ const app = express();
 mongoose.connect('mongodb://localhost/mothballs', { useNewUrlParser: true })
     .then(() => console.log('[mongoose]: connection successful'))
     .catch(err => console.log(`[mongoose]: ${err}`));
+
+amqp.listen();
 
 app.use(morgan('dev'));
 app.use(cors({

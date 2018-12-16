@@ -1,6 +1,8 @@
 import { connect } from 'amqplib';
+import { User } from './models/user';
 
 const queue = 'images';
+const respQueue = 'done';
 
 const conn = (async () => {
     const c = await connect(process.env.AMQP_URL);
@@ -21,4 +23,28 @@ export async function mqpublish(msg) {
     const ch = await chan;
     if (!ch) throw new Error('no channel');
     return await ch.sendToQueue(queue, Buffer.from(JSON.stringify(msg)));
+}
+
+export async function listen() {
+    const ch = await chan;
+    if (!ch) throw new Error('no channel');
+    ch.consume(respQueue, (msg) => {
+        if (msg != null) {
+            console.log(msg.content.toString());
+            ch.ack(msg);
+            const data = JSON.parse(msg.content.toString());
+            if (data.url) {
+                User.findOneAndUpdate(
+                    { userId: data.userId },
+                    { profile_image: data.url },
+                    (err, doc) => {
+                        if (err) console.error(err);
+                        else console.log(`update profile for user ${data.userId}`);
+                    },
+                );
+            } else {
+                console.log('unknown message type');
+            }
+        }
+    });
 }
