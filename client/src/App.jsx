@@ -6,9 +6,9 @@ import { withRouter } from 'react-router';
 import 'bulma/css/bulma.css';
 
 class App extends React.Component {
-  componentDidMount() {
-    this.props.getExercises()
-    this.props.checkSession()
+  async componentDidMount() {
+    await this.props.getExercises()
+    await this.props.checkSession()
   }
 
   render() {

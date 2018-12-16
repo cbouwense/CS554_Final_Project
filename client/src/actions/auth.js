@@ -4,9 +4,7 @@ import { USER_LOGIN_SUCCESS, USER_LOGOUT } from './actionTypes';
 export function loginUser(username, password) {
   return async dispatch => {
     try {
-      const res = await axios.post('http://localhost:4000/api/user/login', { username, password }, {
-        withCredentials: true
-      });
+      const res = await axios.post('/api/user/login', { username, password });
       return dispatch({
         type: USER_LOGIN_SUCCESS,
         data: res.data,
@@ -23,7 +21,7 @@ export function loginUser(username, password) {
 export function logoutUser() {
   return dispatch => {
     try {
-      const res = axios.post('http://localhost:4000/api/logout');
+      const res = axios.post('/api/logout');
       return dispatch({
         type: USER_LOGOUT,
         data: res.data,
@@ -40,7 +38,7 @@ export function logoutUser() {
 export function registerUser(username, password) {
   return async dispatch => {
     try {
-      const res = await axios.post('http://localhost:4000/api/user', { username, password })
+      const res = await axios.post('/api/user', { username, password })
       return dispatch({
         type: USER_LOGIN_SUCCESS,
         data: res.data,
@@ -57,7 +55,7 @@ export function registerUser(username, password) {
 export function updateUser(userId, data) {
   return async dispatch => {
     try {
-      const res = await axios.patch(`http://localhost:4000/api/user/${userId}`, data);
+      const res = await axios.patch(`/api/user/${userId}`, data);
       return dispatch({
         type: USER_LOGIN_SUCCESS,
         data: res.data, 
@@ -74,9 +72,7 @@ export function updateUser(userId, data) {
 export function checkSession() {
   return async dispatch => {
     try {
-      const res = await axios.get('http://localhost:4000/api/user/data/', {
-        withCredentials: true
-      });
+      const res = await axios.get('/api/user/data/');
       console.log(res.data);
       if (res.data)
         return dispatch({

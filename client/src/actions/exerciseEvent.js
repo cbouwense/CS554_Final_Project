@@ -8,7 +8,7 @@ import {
 export function createExerciseEvent({ exerciseId, userId, timestamp, weight, sets, reps }) {
   return async dispatch => {
     try {
-      const res = await axios.post('http://localhost:4000/api/exerciseEvent', {
+      const res = await axios.post('/api/exerciseEvent', {
         exerciseId,
         userId,
         timestamp,
@@ -30,12 +30,7 @@ export function createExerciseEvent({ exerciseId, userId, timestamp, weight, set
 export function updateExerciseEvent(exerciseEvent) {
   return async dispatch => {
     try {
-      const res = await axios.patch(
-        `http://localhost:4000/api/exerciseEvent/${exerciseEvent._id}`,
-        {
-          ...exerciseEvent
-        }
-      );
+      const res = await axios.patch(`/api/exerciseEvent/${exerciseEvent._id}`, exerciseEvent);
       dispatch({
         type: EXERCISE_EVENT_UPDATED,
         data: res.data

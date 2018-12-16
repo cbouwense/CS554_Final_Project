@@ -28,7 +28,7 @@ async function createUser(req: Request, res: Response) {
         user = new User({
             username,
             password: await hash(password, saltLength),
-            profile_image: 'http://localhost:4000/defaultprofile.png',
+            profile_image: '/defaultprofile.png',
             bio: null,
             images: [],
         });
