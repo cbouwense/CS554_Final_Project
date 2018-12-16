@@ -25,11 +25,11 @@ class Navbar extends React.Component {
             <b>Mothballs</b>
           </NavLink>
           <NavLink className="navbar-item" to="/exerciseInfo">
-            Exercise Examples
+            Exercises
           </NavLink>
           {loggedIn &&
            <NavLink className="navbar-item" to="/exerciseEvents/new">
-             Log Exercise
+             Add New Exercise
            </NavLink>}
 
           <a
@@ -48,10 +48,10 @@ class Navbar extends React.Component {
 
         <div className={`navbar-menu ${this.state.burgerOpen && 'is-active'}`} id="navbar">
           <div className="navbar-end">
-            {user._id
+            {loggedIn
             ? <>
                 <a className="navbar-item" onClick={this.logout}>Logout {user.username}</a>
-              <NavLink className="navbar-item" to="/account/profile"><img src={user.profile_image} alt="profile" /></NavLink>
+                <NavLink className="navbar-item" to="/account/profile"><img src={user.profile_image} alt="profile" /></NavLink>
               </>
             : <>
                 <NavLink to="/account/login" className="navbar-item">Login</NavLink>

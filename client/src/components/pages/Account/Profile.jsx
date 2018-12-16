@@ -74,7 +74,7 @@ class Profile extends React.Component {
           <div className="column">
             <p>username: {user.username}</p>
             <p>bio: {user.bio}</p>
-            <img src={user.profile_image}></img>
+            <img src={user.profile_image} alt="profile"></img>
           </div>
 
           <div className="column">
@@ -117,7 +117,7 @@ class Profile extends React.Component {
                       name="profile_image"
                       onChange={this.handleFileUpload} />
                     <span className="file-cta">
-                      <span aria-label="Camera" roll="img" className="file-icon">📷</span>
+                      <span aria-label="Camera" role="img" className="file-icon">📷</span>
                       <span className="file-label">Choose a file…</span>
                     </span>
                     <span className="file-name">

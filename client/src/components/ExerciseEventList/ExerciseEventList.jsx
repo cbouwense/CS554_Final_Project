@@ -12,10 +12,9 @@ class ExerciseEventList extends React.Component {
   }
 
   toggleEdit = i => () => {
-    const { editing } = this.state;
-    editing[i] = !editing[i];
-
-    this.setState({ editing });
+    this.setState({
+      editing: this.state.editing.map((e, j) => j === i ? !e : e)
+    });
   };
 
   render() {
