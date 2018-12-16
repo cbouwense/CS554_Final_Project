@@ -1,4 +1,5 @@
 import { connect } from 'amqplib';
+import { Server } from 'socket.io';
 import { User } from './models/user';
 
 const queue = 'images';
@@ -25,23 +26,26 @@ export async function mqpublish(msg) {
     return await ch.sendToQueue(queue, Buffer.from(JSON.stringify(msg)));
 }
 
-export async function listen() {
+export async function listen(io: Server) {
     const ch = await chan;
     if (!ch) throw new Error('no channel');
-    ch.consume(respQueue, (msg) => {
+    ch.consume(respQueue, async (msg) => {
         if (msg != null) {
             console.log(msg.content.toString());
             ch.ack(msg);
             const data = JSON.parse(msg.content.toString());
             if (data.url) {
-                User.findOneAndUpdate(
-                    { userId: data.userId },
-                    { profile_image: data.url },
-                    (err, doc) => {
-                        if (err) console.error(err);
-                        else console.log(`update profile for user ${data.userId}`);
-                    },
-                );
+                try {
+                    const res = await User.findOneAndUpdate(
+                        { _id: data.userId },
+                        { profile_image: data.url },
+                    );
+                    if (!res) throw new Error('no such user');
+                    console.log(`updated profile for user ${data.userId} - ${data.url}`, res);
+                    io.emit('update');
+                } catch (err) {
+                    console.error(err);
+                }
             } else {
                 console.log('unknown message type');
             }
