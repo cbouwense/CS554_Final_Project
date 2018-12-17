@@ -32,7 +32,6 @@
         "@types/express-session": "^1.15.11",
         "amqplib": "^0.5.3",
         "aws-sdk": "^2.375.0",
-        "bcrypt": "^3.0.2",
         "bcryptjs": "^2.4.3",
         "body-parser": "^1.18.3",
         "cors": "^2.8.5",
